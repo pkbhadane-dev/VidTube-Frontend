@@ -1,16 +1,13 @@
-
-import './App.css'
-import { Button, buttonVariants } from './components/ui/button'
+import "./App.css";
+import { Button, buttonVariants } from "./components/ui/button";
+import { Signup } from "./pages/Signup";
 
 function App() {
-
   return (
     <>
-      <h1 className=' text-3xl bg-sky-300'>VidTube</h1>
-      <Button variant='destructive'>Click Me!</Button>
-      
+      <Signup/>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
