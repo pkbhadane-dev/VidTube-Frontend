@@ -1,7 +1,7 @@
 export const Channel = () => {
   return (
     <>
-      <h1>Channel Page</h1>
+      <h1 className="text-white">Channel Page</h1>
     </>
   );
 };

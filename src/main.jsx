@@ -6,11 +6,19 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import { Home } from "./pages/home/Home";
 import { Login } from "./pages/authentication/Login";
 import { Signup } from "./pages/authentication/Signup";
+import { Video } from "./pages/home/Video";
+import { Layout } from "./Layout";
+import { Channel } from "./pages/home/Channel";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Layout />,
+    children: [
+      { path: "", element: <Home /> },
+      { path: "/video", element: <Video /> },
+      {path: "/channel", element: <Channel/>}
+    ],
   },
   {
     path: "/login",
@@ -20,6 +28,7 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <Signup />,
   },
+  // { path: "/video", element: <Video /> },
 ]);
 
 createRoot(document.getElementById("root")).render(

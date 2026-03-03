@@ -3,35 +3,25 @@ import { Navbar } from "@/components/nav-bar";
 import { Sidebar } from "@/components/sidebar";
 import { Card } from "@/components/card";
 import { useState } from "react";
+import { Outlet } from "react-router";
 
 export const Home = () => {
   const [data, setData] = useState(false);
 
   return (
-    <div className="bg-[#0B0E14] h-dvh flex flex-col overflow-hidden">
-      <Navbar data={data} setData={setData} />
-
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar data={data} />
-
-        <main className=" flex-1 overflow-y-auto transition-all duration-300 p-6">
-          <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-           
-          </div>
-        </main>
-      </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
     </div>
   );
 };
