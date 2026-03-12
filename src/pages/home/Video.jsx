@@ -1,7 +1,16 @@
 import { CommentSection } from "@/components/comment-section";
 import { SideVideoCard } from "@/components/side-video-card";
+import { Link } from "react-router";
+import { useState } from "react";
+import { PlaylistModal } from "@/components/playlist-model";
 
 export const Video = () => {
+  const [showModel, setShowModel] = useState(false);
+  const dummyPlaylists = [
+    { _id: "1", name: "Watch Later" },
+    { _id: "2", name: "React Projects" },
+    { _id: "3", name: "Liked Videos" },
+  ];
   return (
     <div className="bg-[#0B0E14] min-h-screen text-zinc-50 font-sans">
       <div className="max-w-400 mx-auto flex flex-col lg:flex-row gap-6 p-4 lg:p-8">
@@ -23,7 +32,9 @@ export const Video = () => {
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-purple-600"></div>{" "}
                 <div>
-                  <h3 className="font-bold">Gemini Dev</h3>
+                  <Link to="/channel">
+                    <h3 className="font-bold">Prashant Dev</h3>
+                  </Link>
                   <p className="text-xs text-zinc-400">1.5M subscribers</p>
                 </div>
                 <button className="ml-4 px-6 py-2 bg-zinc-50 text-black font-bold rounded-full hover:bg-zinc-200 transition-all">
@@ -35,11 +46,21 @@ export const Video = () => {
                 <button className="bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 flex items-center gap-2">
                   <span>👍</span> 124K
                 </button>
-                <button className="bg-white/10 px-4 py-2 rounded-full hover:bg-white/20">
-                  Share
+                <button
+                  className="bg-white/10 px-4 py-2 rounded-full hover:bg-white/20"
+                  onClick={() => setShowModel(true)}
+                >
+                  Add to Playlist
                 </button>
               </div>
             </div>
+            {showModel && (
+              <PlaylistModal
+                closeModel={() => setShowModel(false)}
+                videoId={"@1"}
+                playlist={dummyPlaylists}
+              />
+            )}
 
             <div className="mt-6 p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all cursor-pointer">
               <p className="text-sm font-bold">1.2M views • 2 days ago</p>

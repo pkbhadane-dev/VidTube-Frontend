@@ -4,13 +4,13 @@ import { Outlet } from "react-router";
 import { useState } from "react";
 
 export const Layout = () => {
-  const [data, setData] = useState(false);
+  const [toggle, setToggle] = useState(false);
 
   return (
     <div className="bg-[#0B0E14] h-dvh flex flex-col overflow-hidden">
-      <Navbar data={data} setData={setData} />
+      <Navbar toggle={toggle} setToggle={setToggle} />
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar data={data} />
+        <Sidebar toggle={toggle} />
         <main className="flex-1 overflow-y-auto transition-all duration-300 p-6">
           <Outlet />
         </main>

@@ -1,11 +1,11 @@
 import { FiMenu } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
 import { FaRegUser } from "react-icons/fa";
-export const Navbar = ({data, setData}) => {
+export const Navbar = ({toggle, setToggle}) => {
 
   const handleOnClick = (e) => {
     e.preventDefault()
-    setData(() => data ? false: true)
+    setToggle(() => toggle ? false: true)
   }
 
   return (

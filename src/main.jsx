@@ -9,6 +9,7 @@ import { Signup } from "./pages/authentication/Signup";
 import { Video } from "./pages/home/Video";
 import { Layout } from "./Layout";
 import { Channel } from "./pages/home/Channel";
+import { PlaylistModal } from "./components/playlist-model";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,8 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <Home /> },
       { path: "/video", element: <Video /> },
-      {path: "/channel", element: <Channel/>}
+      {path: "/channel", element: <Channel/>},
+      {path: "/playlist-model", element: <PlaylistModal/>}
     ],
   },
   {
