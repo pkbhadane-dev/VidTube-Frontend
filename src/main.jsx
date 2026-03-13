@@ -9,7 +9,9 @@ import { Signup } from "./pages/authentication/Signup";
 import { Video } from "./pages/home/Video";
 import { Layout } from "./Layout";
 import { Channel } from "./pages/home/Channel";
-import { PlaylistModal } from "./components/playlist-model";
+import { Subscription } from "./pages/home/Subscription";
+import { History } from "./pages/home/History";
+import { Playlist } from "./pages/home/Playlist";
 
 const router = createBrowserRouter([
   {
@@ -18,8 +20,10 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <Home /> },
       { path: "/video", element: <Video /> },
-      {path: "/channel", element: <Channel/>},
-      {path: "/playlist-model", element: <PlaylistModal/>}
+      { path: "/channel", element: <Channel /> },
+      { path: "/subscription", element: <Subscription /> },
+      { path: "/history", element: <History /> },
+      { path: "/playlist", element: <Playlist /> },
     ],
   },
   {
@@ -30,7 +34,7 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <Signup />,
   },
-  // { path: "/video", element: <Video /> },
+  
 ]);
 
 createRoot(document.getElementById("root")).render(
