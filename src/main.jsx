@@ -12,6 +12,8 @@ import { Channel } from "./pages/home/Channel";
 import { Subscription } from "./pages/home/Subscription";
 import { History } from "./pages/home/History";
 import { Playlist } from "./pages/home/Playlist";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const router = createBrowserRouter([
   {
@@ -34,11 +36,20 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <Signup />,
   },
-  
 ]);
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity /* 1000 * 60 * 5, */,
+      retry: 1,
+    },
+  },
+});
+
 createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router}>
-    <App />
-  </RouterProvider>,
+  <QueryClientProvider client={queryClient}>
+    <RouterProvider router={router} />
+    <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>,
 );
