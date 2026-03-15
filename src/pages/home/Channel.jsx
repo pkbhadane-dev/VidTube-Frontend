@@ -1,8 +1,11 @@
 import { Card } from "@/components/card";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useState } from "react";
 
 export const Channel = () => {
   const [activeTab, setActiveTab] = useState("Videos");
+
+  const { user, isAuthenticated } = useAuthStore();
 
   return (
     <div className="bg-[#0B0E14] min-h-screen text-zinc-50">
@@ -10,16 +13,17 @@ export const Channel = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
         <div className="flex flex-col md:flex-row items-start md:items-center gap-6 pb-8 border-b border-white/10">
-          <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-[#0B0E14] bg-zinc-800 overflow-hidden shadow-2xl">
+          <div>
             <img
-              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Gemini"
+              className=" object-cover w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-[#0B0E14]"
+              src={user.data.avatar}
               alt="Channel Avatar"
             />
           </div>
 
           <div className="flex-1">
             <h1 className="text-3xl md:text-4xl font-black tracking-tight">
-              Prashant Dev
+              {user.data.fullname}
             </h1>
             <p className="text-zinc-400 mt-1">
               @geminidev • 1.5M subscribers • 120 videos

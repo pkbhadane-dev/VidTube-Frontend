@@ -1,12 +1,19 @@
 import { FiMenu } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
 import { FaRegUser } from "react-icons/fa";
+import { useAuthStore } from "@/store/useAuthStore";
+import { Link } from "react-router";
 export const Navbar = ({toggle, setToggle}) => {
 
   const handleOnClick = (e) => {
     e.preventDefault()
     setToggle(() => toggle ? false: true)
   }
+
+  const {user, isAuthenticated} = useAuthStore()
+
+  console.log(user, isAuthenticated);
+  
 
   return (
     <>
@@ -24,7 +31,9 @@ export const Navbar = ({toggle, setToggle}) => {
             <IoIosSearch className=" text-[27px] text-[#ab9be6] sm:text-2xl m-2 cursor-pointer " />
           </div>
           <span>
-            <FaRegUser className="text-2xl text-[#ab9be6]" />
+           <Link to="/channel">
+           <img src={user.data.avatar} alt="user avatar" className=" h-9 w-9 rounded-full object-cover ring-1 ring-black/10"/>
+           </Link>
           </span>
         </div>
       </div>
