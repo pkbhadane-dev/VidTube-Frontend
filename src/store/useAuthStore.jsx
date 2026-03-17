@@ -18,6 +18,13 @@ export const useAuthStore = create(
           user: null,
           isAuthenticated: false,
         }),
+
+      setLogin: (userData) => {
+        set({
+          user:userData,
+          isAuthenticated: true
+        })
+      }  
     }),
     {
       name: "auth_storage", // data save as this name in local storage

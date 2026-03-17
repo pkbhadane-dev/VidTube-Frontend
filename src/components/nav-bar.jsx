@@ -10,9 +10,12 @@ export const Navbar = ({toggle, setToggle}) => {
     setToggle(() => toggle ? false: true)
   }
 
-  const {user, isAuthenticated} = useAuthStore()
+  const {user} = useAuthStore()
 
-  console.log(user, isAuthenticated);
+  // console.log(user.data);
+  // if (!user) {
+  //   user.data = null
+  // }
   
 
   return (
@@ -32,7 +35,7 @@ export const Navbar = ({toggle, setToggle}) => {
           </div>
           <span>
            <Link to="/channel">
-           <img src={user.data.avatar} alt="user avatar" className=" h-9 w-9 rounded-full object-cover ring-1 ring-black/10"/>
+           <img src={user ? user.data.avatar : 'user'} alt="user avatar" className=" h-9 w-9 rounded-full object-cover ring-1 ring-black/10"/>
            </Link>
           </span>
         </div>

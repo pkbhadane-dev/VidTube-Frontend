@@ -7,6 +7,8 @@ export const Channel = () => {
 
   const { user, isAuthenticated } = useAuthStore();
 
+  
+
   return (
     <div className="bg-[#0B0E14] min-h-screen text-zinc-50">
       <div className="w-full h-40 sm:h-64 bg-linear-to-r from-[#1A103D] via-[#7000FF] to-[#FF0080] opacity-80"></div>

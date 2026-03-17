@@ -21,7 +21,7 @@ export const useRegister = () => {
 
     onError: (error) => {
       console.log("Registration Error", error);
-      alert(error.response?.data?.message || "Something went wrong");
+      alert(error.message || "Something went wrong");
     },
   });
 };
@@ -36,8 +36,7 @@ export const useLogout = () => {
       return response;
     },
 
-    onSuccess: (response) => {
-      console.log(response);
+    onSuccess: () => {
       logoutFromStore();
       queryClient.clear();
       nevigate("/login");
@@ -46,6 +45,26 @@ export const useLogout = () => {
 
     onError: (error) => {
       console.log("Logout error", error);
+    },
+  });
+};
+
+export const useLogin = () => {
+  const setLogin = useAuthStore((state) => state.setLogin);
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: async (userData) => {
+      const { data } = await axiosInstance.post("/user/login", userData);
+      return data;
+    },
+    onSuccess: (data) => {
+      setLogin(data);
+      navigate("/");
+      alert("Login Successfull");
+    },
+    onError: (error) => {
+      console.log("Login Error", error);
+      alert(error.message || "something went wrong");
     },
   });
 };
