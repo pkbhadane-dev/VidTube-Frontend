@@ -1,5 +1,5 @@
 import { useAuthStore } from "@/store/useAuthStore";
-import { AuthRequirement } from "./authRequirement";
+import { AuthRequirement } from "./auth-requirement";
 
 export const ProtectedRoute = ({children}) => {
   const { isAuthenticated } = useAuthStore();

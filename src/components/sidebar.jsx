@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { IoIosHome } from "react-icons/io";
 import { MdSubscriptions } from "react-icons/md";
 import { FaHistory } from "react-icons/fa";
@@ -6,20 +6,22 @@ import { MdFeaturedPlayList } from "react-icons/md";
 import { BiSolidLogOut } from "react-icons/bi";
 import { useLogout } from "@/hooks/useAuth";
 import { useState } from "react";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export const Sidebar = ({ toggle }) => {
   const location = useLocation();
-
+  const nevigate = useNavigate();
   const isActive = (path) => location.pathname === path;
   const [logoutActive, setLogoutActive] = useState(false);
 
   const { mutate: logout, isPending } = useLogout();
+  const { isAuthenticated } = useAuthStore();
 
   const handleOnClick = (e) => {
     e.preventDefault();
-    setLogoutActive(()=> !logoutActive);
-    isActive(null)
-    return logout()
+    setLogoutActive(() => !logoutActive);
+    isActive(null);
+    isAuthenticated ? logout() : nevigate("/login");
   };
 
   const sideBarMenu = [
@@ -51,17 +53,18 @@ export const Sidebar = ({ toggle }) => {
                   }`}
                 >
                   <span className="text-[24px] pl-4 ">{item.icon}</span>
-                  <span className={`text-[15px] font-medium tracking-wide ${toggle ? " md:opacity-100 w-auto" : "md:opacity-0 w-0 invisible"}`}>{item.name}</span>
-                  
+                  <span
+                    className={`text-[15px] font-medium tracking-wide ${toggle ? " md:opacity-100 w-auto" : "md:opacity-0 w-0 invisible"}`}
+                  >
+                    {isAuthenticated ? item.name : "Login"}
+                  </span>
                 </div>
               );
             }
 
             return (
               <Link key={item.path} to={item.path}>
-                
                 <div
-                
                   className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group ${toggle ? "px-6 justify-start" : "px-0 justify-center"} ${
                     isActive(item.path)
                       ? "bg-purple-600/10 text-purple-500"
@@ -76,9 +79,7 @@ export const Sidebar = ({ toggle }) => {
                   >
                     {item.name}
                   </span>
-
                 </div>
-                
               </Link>
             );
           })}

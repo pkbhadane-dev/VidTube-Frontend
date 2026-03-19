@@ -13,6 +13,7 @@ import { Playlist } from "./pages/home/Playlist";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ProtectedRoute } from "./components/protectedRoute";
+import { UploadVideoForm } from "./components/upload-video-form";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+     
     ],
   },
   {

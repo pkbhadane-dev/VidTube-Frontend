@@ -1,16 +1,16 @@
 import { Card } from "@/components/card";
+import { UploadVideoForm } from "@/components/upload-video-form";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useToggleStore } from "@/store/useToggleStore";
 import { useState } from "react";
 
 export const Channel = () => {
   const [activeTab, setActiveTab] = useState("Videos");
-
   const { user, isAuthenticated } = useAuthStore();
-
-  
+  const { setVideoUploadForm ,videoUploadForm } = useToggleStore();
 
   return (
-    <div className="bg-[#0B0E14] min-h-screen text-zinc-50">
+    <div className="bg-[#0B0E14] min-h-screen text-zinc-50 relative">
       <div className="w-full h-40 sm:h-64 bg-linear-to-r from-[#1A103D] via-[#7000FF] to-[#FF0080] opacity-80"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
@@ -45,25 +45,36 @@ export const Channel = () => {
           </div>
         </div>
 
-        <div className="flex gap-8 mt-4 border-b border-white/5 overflow-x-auto no-scrollbar">
-          {["Home", "Videos", "Playlists", "Community", "About"].map((tab) => (
+        <div className="flex justify-between px-8 mt-4 border-b border-white/5 overflow-x-auto no-scrollbar">
+          <div className=" flex gap-8">
+            {["Home", "Videos", "Playlists", "Community", "About"].map(
+              (tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`pb-4 text-sm font-bold transition-all relative ${
+                    activeTab === tab
+                      ? "text-white"
+                      : "text-zinc-500 hover:text-zinc-300"
+                  }`}
+                >
+                  {tab}
+                  {activeTab === tab && (
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-purple-600 rounded-t-full" />
+                  )}
+                </button>
+              ),
+            )}
+          </div>
+          <div className="flex items-center">
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`pb-4 text-sm font-bold transition-all relative ${
-                activeTab === tab
-                  ? "text-white"
-                  : "text-zinc-500 hover:text-zinc-300"
-              }`}
+            onClick={setVideoUploadForm}  className={` bg-purple-600 px-4 py-2 mb-4 rounded-md text-sm font-bold transition-all relative hover:bg-purple-800`}
             >
-              {tab}
-              {activeTab === tab && (
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-purple-600 rounded-t-full" />
-              )}
+              Upload Video
             </button>
-          ))}
+          </div>
         </div>
-
+        {videoUploadForm && <UploadVideoForm/>}
         <div className="py-8">
           {activeTab === "Videos" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

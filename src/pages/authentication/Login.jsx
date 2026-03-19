@@ -1,6 +1,16 @@
 import { LoginForm } from "@/components/login-form";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 export const Login = () => {
+  const nevigate = useNavigate();
+  const { isAuthenticated } = useAuthStore();
+  useEffect(() => {
+    if (isAuthenticated) {
+       nevigate("/");
+    }
+  }, [isAuthenticated, nevigate]);
   return (
     <>
       <div className=" w-full h-lvh bg-[#0B0E14]">

@@ -1,6 +1,6 @@
 import { FiMenu } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
-import { FaRegUser } from "react-icons/fa";
+
 import { useAuthStore } from "@/store/useAuthStore";
 import { Link } from "react-router";
 export const Navbar = ({toggle, setToggle}) => {

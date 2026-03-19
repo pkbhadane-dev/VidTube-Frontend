@@ -1,13 +1,16 @@
+import { useVideoStore } from "@/store/useVideoStore";
 import { Link } from "react-router";
 
 export const Card = () => {
+  const { videoData } = useVideoStore();
+  console.log(videoData)
   return (
     <>
       <Link to="/video">
         <div className="group relative p-px rounded-xl overflow-hidden transition-all duration-500 hover:bg-linear-to-br hover:from-[#7000FF] hover:to-[#FF0080] hover:shadow-[0_0_20px_rgba(112,0,255,0.2)]">
           <div className="bg-[#11141B] rounded-xl h-full overflow-hidden">
-            <div className="h-44 bg-zinc-800/50 flex items-center justify-center relative overflow-hidden">
-              <span className="text-zinc-500 text-xs">video thumbnail</span>
+            <div className=" bg-zinc-800/50 flex items-center justify-center relative overflow-hidden">
+              <img src={videoData.data.thumbnail} className="w-full aspect-video object-cover rounded-lg" alt="" />
 
               <div className="absolute inset-0 bg-purple-900/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>

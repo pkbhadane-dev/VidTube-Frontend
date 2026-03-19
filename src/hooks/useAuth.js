@@ -1,4 +1,4 @@
-import { axiosInstance } from "@/Api/axiosInstance";
+import axiosInstance from "@/Api/axiosInstance";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
