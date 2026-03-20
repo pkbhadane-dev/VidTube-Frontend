@@ -19,9 +19,10 @@ import { useRegister } from "@/hooks/useAuth";
 import { useToggleStore } from "@/store/useToggleStore";
 import { useState } from "react";
 import { useVideoUpload } from "@/hooks/useVideo";
+import { ProgressBar } from "./progress-bar";
 
 export function UploadVideoForm({ className, ...props }) {
-  const { setCancelVideoUploadForm } = useToggleStore();
+  const { setCancelVideoUploadForm, isProcessing } = useToggleStore();
 
   const [videoData, setVideoData] = useState({
     title: "",
@@ -125,8 +126,11 @@ export function UploadVideoForm({ className, ...props }) {
                   type="submit"
                   disabled={isPending}
                 >
-                  {isPending ? "Uploading" : "Upload"}
+                  {isProcessing ? "Processing" : "Upload"}
                 </Button>
+                <div className=" text-center">
+                  {!isProcessing && <ProgressBar />}
+                </div>
               </Field>
             </FieldGroup>
           </form>

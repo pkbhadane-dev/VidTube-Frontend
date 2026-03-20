@@ -1,9 +1,9 @@
 import { useVideoStore } from "@/store/useVideoStore";
 import { Link } from "react-router";
-
+    
 export const Card = () => {
   const { videoData } = useVideoStore();
-  console.log(videoData)
+
   return (
     <>
       <Link to="/video">
@@ -17,7 +17,7 @@ export const Card = () => {
 
             <div className="p-4">
               <h3 className="text-zinc-50 font-semibold line-clamp-2 group-hover:text-purple-300 transition-colors">
-                Building a Premium UI with Tailwind 2026
+                {videoData.data.owner.fullname}
               </h3>
               <p className="text-zinc-400 text-sm mt-2 flex items-center gap-2">
                 Gemini Dev
