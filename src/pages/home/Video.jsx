@@ -1,8 +1,9 @@
 import { CommentSection } from "@/components/comment-section";
 import { SideVideoCard } from "@/components/side-video-card";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import { useState } from "react";
 import { PlaylistModal } from "@/components/playlist-model";
+import { useFetchVideoById } from "@/hooks/useVideo";
 
 export const Video = () => {
   const [showModel, setShowModel] = useState(false);
@@ -11,29 +12,38 @@ export const Video = () => {
     { _id: "2", name: "React Projects" },
     { _id: "3", name: "Liked Videos" },
   ];
+  const { videoId } = useParams();
+  const { data: video, isLoading } = useFetchVideoById(videoId);
+  console.log(videoId);
+  console.log("video", video);
+
   return (
     <div className="bg-[#0B0E14] min-h-screen text-zinc-50 font-sans">
       <div className="max-w-400 mx-auto flex flex-col lg:flex-row gap-6 p-4 lg:p-8">
         <div className="flex-1">
           <div className="aspect-video w-full rounded-2xl bg-black overflow-hidden shadow-2xl border border-white/5">
             <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-[#1A103D] to-black">
-              <span className="text-zinc-500 italic">
-                Video Player goes here...
-              </span>
+              {/* <span className="text-zinc-500 italic"> */}
+                <video
+                  src={video?.videoFile}
+                  poster={video?.thumbnail}
+                  controls
+                  autoPlay
+                  className="w-full h-full object-cover"
+                />
+              {/* </span> */}
             </div>
           </div>
 
           <div className="mt-6">
-            <h1 className="text-2xl font-bold leading-tight">
-              Building a Netflix Clone: The Ultimate Guide 2026
-            </h1>
+            <h1 className="text-2xl font-bold leading-tight">{video?.title}</h1>
 
             <div className="flex flex-wrap justify-between items-center mt-4 pb-6 border-b border-white/10 gap-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-purple-600"></div>{" "}
                 <div>
-                  <Link to="/channel">
-                    <h3 className="font-bold">Prashant Dev</h3>
+                  <Link>
+                    <h3 className="font-bold">{video?.owner.username}</h3>
                   </Link>
                   <p className="text-xs text-zinc-400">1.5M subscribers</p>
                 </div>

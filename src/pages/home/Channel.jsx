@@ -1,5 +1,6 @@
 import { Card } from "@/components/card";
 import { UploadVideoForm } from "@/components/upload-video-form";
+import { useFetchAllVideos } from "@/hooks/useVideo";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useToggleStore } from "@/store/useToggleStore";
 import { useState } from "react";
@@ -7,7 +8,8 @@ import { useState } from "react";
 export const Channel = () => {
   const [activeTab, setActiveTab] = useState("Videos");
   const { user, isAuthenticated } = useAuthStore();
-  const { setVideoUploadForm ,videoUploadForm } = useToggleStore();
+  const { setVideoUploadForm, videoUploadForm } = useToggleStore();
+  const { data: videos } = useFetchAllVideos();
 
   return (
     <div className="bg-[#0B0E14] min-h-screen text-zinc-50 relative">
@@ -68,19 +70,17 @@ export const Channel = () => {
           </div>
           <div className="flex items-center">
             <button
-            onClick={setVideoUploadForm}  className={` bg-purple-600 px-4 py-2 mb-4 rounded-md text-sm font-bold transition-all relative hover:bg-purple-800`}
+              onClick={setVideoUploadForm}
+              className={` bg-purple-600 px-4 py-2 mb-4 rounded-md text-sm font-bold transition-all relative hover:bg-purple-800`}
             >
               Upload Video
             </button>
           </div>
         </div>
-        {videoUploadForm && <UploadVideoForm/>}
+        {videoUploadForm && <UploadVideoForm />}
         <div className="py-8">
           {activeTab === "Videos" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              <Card />
-              <Card />
-              <Card />
               <Card />
             </div>
           )}
