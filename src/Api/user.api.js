@@ -7,7 +7,7 @@ export const useRegisterRequest = async (userFormData) => {
 
 export const userLoginRequest = async (userFormData) => {
   const { data } = await axiosInstance.post("/user/login", userFormData);
-  return data;
+  return data.data.user;
 };
 
 export const userLogoutRequest = async () => {

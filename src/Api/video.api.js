@@ -14,5 +14,15 @@ export const fetchAllVideoRequest = async () => {
 
 export const fetchVideoByIdRequest = async (videoId) => {
   const { data } = await axiosInstance.get(`/video/${videoId}`);
-  return data.data
+  return data.data;
 };
+
+export const fetchUserVideosRequest = async () => {
+  const { data } = await axiosInstance.get("/dashboard/user-videos");
+  return data.data;
+};
+
+export const deleteVideoRequest = async(videoId) => {
+  const response = await axiosInstance.delete(`/video/${videoId}`)
+  return response
+}

@@ -3,7 +3,7 @@ import { useFetchAllVideos } from "@/hooks/useVideo";
 
 export const Home = () => {
   const { data: videos, isPending, isError } = useFetchAllVideos();
-  console.log(videos);
+  // console.log(videos);
   
   console.log("pending", isPending);
 

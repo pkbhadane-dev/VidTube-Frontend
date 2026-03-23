@@ -1,10 +1,13 @@
 import { Link, useParams } from "react-router";
+import { UpdateDeleteBtn } from "./update-delete-btn";
+import { useAuthStore } from "@/store/useAuthStore";
+
 
 export const Card = ({ video }) => {
-  
+
   return (
     <>
-      <Link to={`/video/${video._id}`}>
+      <Link to={`/video/${video?._id}`}>
         <div className="group relative p-px rounded-xl overflow-hidden transition-all duration-500 hover:bg-linear-to-br hover:from-[#7000FF] hover:to-[#FF0080] hover:shadow-[0_0_20px_rgba(112,0,255,0.2)]">
           <div className="bg-[#11141B] rounded-xl h-full overflow-hidden">
             <div className=" bg-zinc-800/50 flex items-center justify-center relative overflow-hidden">
@@ -13,10 +16,10 @@ export const Card = ({ video }) => {
                 className="w-full aspect-video object-cover rounded-lg"
                 alt=""
               />
-
+            
               <div className="absolute inset-0 bg-purple-900/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-
+            <UpdateDeleteBtn video={video}/>
             <div className="p-4">
               <h3 className="text-zinc-50 font-semibold line-clamp-2 group-hover:text-purple-300 transition-colors">
                 {video?.title}

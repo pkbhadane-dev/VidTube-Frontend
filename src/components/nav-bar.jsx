@@ -35,7 +35,7 @@ export const Navbar = ({toggle, setToggle}) => {
           </div>
           <span>
            <Link to="/channel">
-           <img src={user ? user.data.avatar : 'user'} alt="user avatar" className=" h-9 w-9 rounded-full object-cover ring-1 ring-black/10"/>
+           <img src={user ? user?.avatar : 'user'} alt="user avatar" className=" h-9 w-9 rounded-full object-cover ring-1 ring-black/10"/>
            </Link>
           </span>
         </div>

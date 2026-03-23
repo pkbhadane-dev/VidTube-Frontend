@@ -14,8 +14,7 @@ export const Video = () => {
   ];
   const { videoId } = useParams();
   const { data: video, isLoading } = useFetchVideoById(videoId);
-  console.log(videoId);
-  console.log("video", video);
+
 
   return (
     <div className="bg-[#0B0E14] min-h-screen text-zinc-50 font-sans">
@@ -75,7 +74,7 @@ export const Video = () => {
             <div className="mt-6 p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all cursor-pointer">
               <p className="text-sm font-bold">1.2M views • 2 days ago</p>
               <p className="text-sm mt-2 text-zinc-300">
-                This video covers everything about Tailwind CSS and React...
+                {video?.description}
                 <span className="font-bold block mt-2">Show more</span>
               </p>
             </div>

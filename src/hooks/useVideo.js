@@ -1,5 +1,7 @@
 import {
+  deleteVideoRequest,
   fetchAllVideoRequest,
+  fetchUserVideosRequest,
   fetchVideoByIdRequest,
   uploadVideoRequest,
 } from "@/Api/video.api";
@@ -62,5 +64,31 @@ export const useFetchVideoById = (videoId) => {
     queryKey: ["video", videoId],
     queryFn: () => fetchVideoByIdRequest(videoId),
     enabled: !!videoId,
+  });
+};
+
+export const useFetchUserVideos = () => {
+  return useQuery({
+    queryKey: ["userVideos"],
+    queryFn: fetchUserVideosRequest,
+  });
+};
+
+export const useDeleteVideoById = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (videoId) => {
+     return deleteVideoRequest(videoId);
+    },
+    onSuccess: (response) => {
+      console.log(response);
+      console.log("Delete successful, invalidating cache...");
+      queryClient.invalidateQueries({ queryKey: ["videos"] });
+      queryClient.invalidateQueries({ queryKey: ["userVideos"] });
+    },
+    onError: (error) => {
+      console.log(error.message);
+    },
   });
 };

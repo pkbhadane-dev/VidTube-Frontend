@@ -1,6 +1,6 @@
 import { Card } from "@/components/card";
 import { UploadVideoForm } from "@/components/upload-video-form";
-import { useFetchAllVideos } from "@/hooks/useVideo";
+import { useFetchAllVideos, useFetchUserVideos } from "@/hooks/useVideo";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useToggleStore } from "@/store/useToggleStore";
 import { useState } from "react";
@@ -9,7 +9,9 @@ export const Channel = () => {
   const [activeTab, setActiveTab] = useState("Videos");
   const { user, isAuthenticated } = useAuthStore();
   const { setVideoUploadForm, videoUploadForm } = useToggleStore();
-  const { data: videos } = useFetchAllVideos();
+  const { data: userVideos, isPending } = useFetchUserVideos();
+  // console.log(user);
+  console.log(userVideos);
 
   return (
     <div className="bg-[#0B0E14] min-h-screen text-zinc-50 relative">
@@ -20,14 +22,14 @@ export const Channel = () => {
           <div>
             <img
               className=" object-cover w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-[#0B0E14]"
-              src={user.data.avatar}
+              src={user?.avatar}
               alt="Channel Avatar"
             />
           </div>
 
           <div className="flex-1">
             <h1 className="text-3xl md:text-4xl font-black tracking-tight">
-              {user.data.fullname}
+              {user?.fullname}
             </h1>
             <p className="text-zinc-400 mt-1">
               @geminidev • 1.5M subscribers • 120 videos
@@ -81,7 +83,9 @@ export const Channel = () => {
         <div className="py-8">
           {activeTab === "Videos" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              <Card />
+              {userVideos?.map((video) => (
+                <Card key={video._id} video={video} />
+              ))}
             </div>
           )}
           {activeTab === "About" && (
