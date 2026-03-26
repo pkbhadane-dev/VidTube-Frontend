@@ -1,25 +1,30 @@
 import { useDeleteVideoById } from "@/hooks/useVideo";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useToggleStore } from "@/store/useToggleStore";
 import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaPen } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import { IoMdClose } from "react-icons/io";
+import { UpdateVideoForm } from "./update-video-form";
 
 export const UpdateDeleteBtn = ({ video }) => {
+const{videoUpdateForm, setVideoUpdateForm} = useToggleStore()
   const [showBtn, setShowBtn] = useState(false);
   const { mutate: deleteVideo, isPending } = useDeleteVideoById();
+
   const handleOnDelete = (e) => {
     e.preventDefault();
     e.stopPropagation();
     deleteVideo(video._id);
   };
 
-  if (isPending) {
-    console.log("pending...");
-    
+  const handleUpdateClick = (e) =>{
+    e.preventDefault()
+    e.stopPropagation()
+    setVideoUpdateForm(true, video)  
   }
-
+  
   const toggleMenu = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -49,12 +54,13 @@ export const UpdateDeleteBtn = ({ video }) => {
             >
               <FaTrashAlt /> Delete
             </button>
-            <button className="flex items-center gap-2 px-3 py-1.5 hover:bg-blue-600 rounded text-sm text-white transition-colors cursor-pointer">
+            <button onClick={handleUpdateClick} className="flex items-center gap-2 px-3 py-1.5 hover:bg-blue-600 rounded text-sm text-white transition-colors cursor-pointer">
               <FaPen /> Edit
             </button>
           </div>
         )}
       </div>
+      {videoUpdateForm && <UpdateVideoForm onClick={(e)=>{e.stopPropagation(); e.preventDefault()}} video={video}/>}
     </>
   );
 };

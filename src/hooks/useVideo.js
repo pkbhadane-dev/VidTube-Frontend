@@ -3,6 +3,7 @@ import {
   fetchAllVideoRequest,
   fetchUserVideosRequest,
   fetchVideoByIdRequest,
+  updateVideoRequest,
   uploadVideoRequest,
 } from "@/Api/video.api";
 import { useToggleStore } from "@/store/useToggleStore";
@@ -19,8 +20,13 @@ export const useVideoUpload = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const setVideo = useVideoStore((state) => state.setVideoUpload);
-  const { setUploadProgress, setIsUploading, resetProgress, setIsProcessing } =
-    useToggleStore();
+  const {
+    setUploadProgress,
+    setIsUploading,
+    resetProgress,
+    setIsProcessing,
+    setVideoUploadForm,
+  } = useToggleStore();
 
   return useMutation({
     mutationFn: async (videoFormData) => {
@@ -39,9 +45,10 @@ export const useVideoUpload = () => {
 
     onSuccess: (data) => {
       setVideo(data);
-      // navigate("/")
       queryClient.invalidateQueries({ queryKey: ["videos"] });
+      queryClient.invalidateQueries({ queryKey: ["userVideos"] });
       setTimeout(() => resetProgress(), 2000);
+      setVideoUploadForm(false);
     },
 
     onError: (error) => {
@@ -79,16 +86,32 @@ export const useDeleteVideoById = () => {
 
   return useMutation({
     mutationFn: async (videoId) => {
-     return deleteVideoRequest(videoId);
+      return deleteVideoRequest(videoId);
     },
-    onSuccess: (response) => {
-      console.log(response);
-      console.log("Delete successful, invalidating cache...");
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["videos"] });
       queryClient.invalidateQueries({ queryKey: ["userVideos"] });
     },
     onError: (error) => {
       console.log(error.message);
+    },
+  });
+};
+
+export const useUpdateVideo = () => {
+  const queryClient = useQueryClient();
+  const {setVideoUpdateForm} = useToggleStore()
+  return useMutation({
+    mutationFn: async({videoData, videoId}) => {
+      return updateVideoRequest(videoData, videoId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["videos"] });
+      queryClient.invalidateQueries({ queryKey: ["userVideos"] });
+      setVideoUpdateForm(false)
+    },
+    onError: (error) => {
+      console.log(error.message || "Error while updating video");
     },
   });
 };

@@ -72,7 +72,7 @@ export const Channel = () => {
           </div>
           <div className="flex items-center">
             <button
-              onClick={setVideoUploadForm}
+              onClick={() => setVideoUploadForm(true)}
               className={` bg-purple-600 px-4 py-2 mb-4 rounded-md text-sm font-bold transition-all relative hover:bg-purple-800`}
             >
               Upload Video

@@ -2,18 +2,21 @@ import { create } from "zustand";
 
 export const useToggleStore = create((set) => ({
   videoUploadForm: false,
+  videoUpdateForm: false,
+  selectedVideo: null,
   uploadProgress: 0,
   isUploading: false,
   isProcessing: false,
 
-  setVideoUploadForm: () =>
+  setVideoUploadForm: (status) =>
     set({
-      videoUploadForm: true,
+      videoUploadForm: status,
     }),
 
-  setCancelVideoUploadForm: () =>
+  setVideoUpdateForm: (status, videoData = null) =>
     set({
-      videoUploadForm: false,
+      videoUpdateForm: status,
+      selectedVideo: videoData,
     }),
 
   setUploadProgress: (progress) =>

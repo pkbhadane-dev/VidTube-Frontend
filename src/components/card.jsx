@@ -4,6 +4,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 
 
 export const Card = ({ video }) => {
+// console.log(video);
 
   return (
     <>
@@ -21,7 +22,7 @@ export const Card = ({ video }) => {
             </div>
             <UpdateDeleteBtn video={video}/>
             <div className="p-4">
-              <h3 className="text-zinc-50 font-semibold line-clamp-2 group-hover:text-purple-300 transition-colors">
+              <h3 className="text-zinc-50 font-semibold line-clamp-2 truncate group-hover:text-purple-300 transition-colors">
                 {video?.title}
               </h3>
               <p className="text-zinc-400 text-sm mt-2 flex items-center gap-2">

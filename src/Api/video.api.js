@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
 
 export const uploadVideoRequest = async (videoFormData, progress) => {
@@ -22,7 +23,15 @@ export const fetchUserVideosRequest = async () => {
   return data.data;
 };
 
-export const deleteVideoRequest = async(videoId) => {
-  const response = await axiosInstance.delete(`/video/${videoId}`)
-  return response
-}
+export const deleteVideoRequest = async (videoId) => {
+  const response = await axiosInstance.delete(`/video/${videoId}`);
+  return response;
+};
+
+export const updateVideoRequest = async (updateVideoData, videoId) => {
+  const { data } = await axiosInstance.patch(
+    `/video/${videoId}`,
+    updateVideoData,
+  );
+  return data
+};
