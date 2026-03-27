@@ -1,10 +1,17 @@
 import { Link, useParams } from "react-router";
 import { UpdateDeleteBtn } from "./update-delete-btn";
 import { useAuthStore } from "@/store/useAuthStore";
-
+import { formatDistanceToNow } from "date-fns";
 
 export const Card = ({ video }) => {
-// console.log(video);
+  // console.log(video);
+
+  const { user } = useAuthStore();
+
+  const timeAgo = formatDistanceToNow(new Date(video?.createdAt), {
+    addSuffix: true,
+  });
+  const isOwner = user?._id === video?.owner?._id;
 
   return (
     <>
@@ -17,10 +24,10 @@ export const Card = ({ video }) => {
                 className="w-full aspect-video object-cover rounded-lg"
                 alt=""
               />
-            
+
               <div className="absolute inset-0 bg-purple-900/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-            <UpdateDeleteBtn video={video}/>
+            {isOwner && <UpdateDeleteBtn video={video} />}
             <div className="p-4">
               <h3 className="text-zinc-50 font-semibold line-clamp-2 truncate group-hover:text-purple-300 transition-colors">
                 {video?.title}
@@ -30,7 +37,7 @@ export const Card = ({ video }) => {
                 <span className="w-3 h-3 bg-purple-500 rounded-full inline-block"></span>
               </p>
               <div className="text-zinc-500 text-xs mt-1">
-                {video?.views} views • 3 hours ago
+                {video?.views} views • {timeAgo}
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
-export const useRegisterRequest = async (userFormData) => {
+export const userRegisterRequest = async (userFormData) => {
   const { data } = await axiosInstance.post("/user/register", userFormData);
   return data;
 };
@@ -14,3 +14,8 @@ export const userLogoutRequest = async () => {
   const response = await axiosInstance.post("/user/logout");
   return response;
 };
+
+export const userWatchHistoryRequest = async()=>{
+  const {data} = await axiosInstance.get("/user/watch-history")
+  return data?.data
+}

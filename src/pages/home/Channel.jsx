@@ -1,6 +1,6 @@
 import { Card } from "@/components/card";
 import { UploadVideoForm } from "@/components/upload-video-form";
-import { useFetchAllVideos, useFetchUserVideos } from "@/hooks/useVideo";
+import { useFetchUserVideos } from "@/hooks/useVideo";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useToggleStore } from "@/store/useToggleStore";
 import { useState } from "react";
@@ -10,8 +10,7 @@ export const Channel = () => {
   const { user, isAuthenticated } = useAuthStore();
   const { setVideoUploadForm, videoUploadForm } = useToggleStore();
   const { data: userVideos, isPending } = useFetchUserVideos();
-  // console.log(user);
-  console.log(userVideos);
+ 
 
   return (
     <div className="bg-[#0B0E14] min-h-screen text-zinc-50 relative">

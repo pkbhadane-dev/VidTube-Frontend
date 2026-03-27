@@ -93,7 +93,8 @@ export const useDeleteVideoById = () => {
       queryClient.invalidateQueries({ queryKey: ["userVideos"] });
     },
     onError: (error) => {
-      console.log(error.message);
+      const errMsg = error?.response?.data?.message
+      console.log(errMsg);
     },
   });
 };

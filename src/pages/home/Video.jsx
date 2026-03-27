@@ -4,17 +4,35 @@ import { Link, useParams } from "react-router";
 import { useState } from "react";
 import { PlaylistModal } from "@/components/playlist-model";
 import { useFetchVideoById } from "@/hooks/useVideo";
+import { useToggleSubscribe } from "@/hooks/useSubscription";
+import { useToggleStore } from "@/store/useToggleStore";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useFetchChannelProfile } from "@/hooks/useChannel";
+import { Button } from "@/components/ui/button";
 
 export const Video = () => {
   const [showModel, setShowModel] = useState(false);
+  const { mutate: subscribe, isPending } = useToggleSubscribe();
+
   const dummyPlaylists = [
     { _id: "1", name: "Watch Later" },
     { _id: "2", name: "React Projects" },
     { _id: "3", name: "Liked Videos" },
   ];
+
   const { videoId } = useParams();
   const { data: video, isLoading } = useFetchVideoById(videoId);
+  const username = video?.owner?.username;
+  const channelId = video?.owner?._id;
+  const { data: channelProfile } = useFetchChannelProfile(username);
 
+  const isSubscribed = channelProfile?.isSubscribed
+  console.log("isSubscribed", isSubscribed);
+
+  const handleSubscribe = () => {
+    console.log("click");
+    subscribe(channelId);
+  };
 
   return (
     <div className="bg-[#0B0E14] min-h-screen text-zinc-50 font-sans">
@@ -23,13 +41,13 @@ export const Video = () => {
           <div className="aspect-video w-full rounded-2xl bg-black overflow-hidden shadow-2xl border border-white/5">
             <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-[#1A103D] to-black">
               {/* <span className="text-zinc-500 italic"> */}
-                <video
-                  src={video?.videoFile}
-                  poster={video?.thumbnail}
-                  controls
-                  autoPlay
-                  className="w-full h-full object-cover"
-                />
+              <video
+                src={video?.videoFile}
+                poster={video?.thumbnail}
+                controls
+                autoPlay
+                className="w-full h-full object-cover"
+              />
               {/* </span> */}
             </div>
           </div>
@@ -46,8 +64,11 @@ export const Video = () => {
                   </Link>
                   <p className="text-xs text-zinc-400">1.5M subscribers</p>
                 </div>
-                <button className="ml-4 px-6 py-2 bg-zinc-50 text-black font-bold rounded-full hover:bg-zinc-200 transition-all">
-                  Subscribe
+                <button
+                  onClick={handleSubscribe}
+                  className="ml-4 px-6 py-2 bg-zinc-50 text-black font-bold rounded-full hover:bg-zinc-200 transition-all"
+                >
+                  {channelProfile?.isSubscribed ? "Subscribed" : "Subscribe"}
                 </button>
               </div>
 

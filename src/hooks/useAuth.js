@@ -1,11 +1,12 @@
 import axiosInstance from "@/Api/axiosInstance";
 import {
-  useRegisterRequest,
+  userRegisterRequest,
   userLoginRequest,
   userLogoutRequest,
+  userWatchHistoryRequest,
 } from "@/Api/user.api";
 import { useAuthStore } from "@/store/useAuthStore";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 
 export const useRegister = () => {
@@ -14,7 +15,7 @@ export const useRegister = () => {
 
   return useMutation({
     mutationFn: async (userFormData) => {
-      return useRegisterRequest(userFormData);
+      return userRegisterRequest(userFormData);
     },
 
     onSuccess: (data) => {
@@ -75,3 +76,10 @@ export const useLogin = () => {
     },
   });
 };
+
+export const useWatchHistory = () => {
+  return useQuery({
+    queryKey: ["watchHistory"],
+    queryFn: userWatchHistoryRequest
+  })
+}
