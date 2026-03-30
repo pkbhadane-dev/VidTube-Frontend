@@ -18,8 +18,8 @@ export const fetchVideoByIdRequest = async (videoId) => {
   return data.data;
 };
 
-export const fetchUserVideosRequest = async () => {
-  const { data } = await axiosInstance.get("/dashboard/user-videos");
+export const fetchUserVideosRequest = async (username) => {
+  const { data } = await axiosInstance.get(`/dashboard/user-videos/${username}`);
   return data.data;
 };
 

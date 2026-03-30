@@ -1,16 +1,22 @@
 import { Card } from "@/components/card";
 import { UploadVideoForm } from "@/components/upload-video-form";
+import { useFetchChannelProfile } from "@/hooks/useChannel";
 import { useFetchUserVideos } from "@/hooks/useVideo";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useToggleStore } from "@/store/useToggleStore";
 import { useState } from "react";
+import { useParams } from "react-router";
 
 export const Channel = () => {
+  const { username } = useParams();
   const [activeTab, setActiveTab] = useState("Videos");
   const { user, isAuthenticated } = useAuthStore();
   const { setVideoUploadForm, videoUploadForm } = useToggleStore();
-  const { data: userVideos, isPending } = useFetchUserVideos();
- 
+  const { data: channelVideos, isPending } = useFetchUserVideos(username);
+
+  const { data: channelProfile } = useFetchChannelProfile(username);
+
+  const uploadPermission = user?._id === channelProfile?.owner?._id;
 
   return (
     <div className="bg-[#0B0E14] min-h-screen text-zinc-50 relative">
@@ -21,17 +27,17 @@ export const Channel = () => {
           <div>
             <img
               className=" object-cover w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-[#0B0E14]"
-              src={user?.avatar}
+              src={channelProfile?.avatar}
               alt="Channel Avatar"
             />
           </div>
 
           <div className="flex-1">
             <h1 className="text-3xl md:text-4xl font-black tracking-tight">
-              {user?.fullname}
+              {channelProfile?.username}
             </h1>
             <p className="text-zinc-400 mt-1">
-              @geminidev • 1.5M subscribers • 120 videos
+              {channelProfile?.subscribersCount} subscribers {/*• 120 videos*/}
             </p>
             <p className="text-zinc-300 mt-3 max-w-2xl line-clamp-2 text-sm">
               Helping developers build premium user interfaces with React and
@@ -70,19 +76,21 @@ export const Channel = () => {
             )}
           </div>
           <div className="flex items-center">
-            <button
-              onClick={() => setVideoUploadForm(true)}
-              className={` bg-purple-600 px-4 py-2 mb-4 rounded-md text-sm font-bold transition-all relative hover:bg-purple-800`}
-            >
-              Upload Video
-            </button>
+            {uploadPermission && (
+              <button
+                onClick={() => setVideoUploadForm(true)}
+                className={` bg-purple-600 px-4 py-2 mb-4 rounded-md text-sm font-bold transition-all relative hover:bg-purple-800`}
+              >
+                Upload Video
+              </button>
+            )}
           </div>
         </div>
         {videoUploadForm && <UploadVideoForm />}
         <div className="py-8">
           {activeTab === "Videos" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {userVideos?.map((video) => (
+              {channelVideos?.map((video) => (
                 <Card key={video._id} video={video} />
               ))}
             </div>

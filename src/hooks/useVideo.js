@@ -74,10 +74,11 @@ export const useFetchVideoById = (videoId) => {
   });
 };
 
-export const useFetchUserVideos = () => {
+export const useFetchUserVideos = (username) => {
   return useQuery({
-    queryKey: ["userVideos"],
-    queryFn: fetchUserVideosRequest,
+    queryKey: ["userVideos", username],
+    queryFn:()=> fetchUserVideosRequest(username),
+    enabled: !!username
   });
 };
 

@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       { path: "", element: <Home /> },
       { path: "/video/:videoId", element: <Video /> },
       {
-        path: "/channel",
+        path: "/channel/:username",
         element: [
           <ProtectedRoute>
             <Channel />

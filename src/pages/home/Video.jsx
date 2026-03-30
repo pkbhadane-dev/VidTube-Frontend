@@ -9,6 +9,7 @@ import { useToggleStore } from "@/store/useToggleStore";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useFetchChannelProfile } from "@/hooks/useChannel";
 import { Button } from "@/components/ui/button";
+import { SubscribeButton } from "@/components/subscribe-btn";
 
 export const Video = () => {
   const [showModel, setShowModel] = useState(false);
@@ -24,10 +25,11 @@ export const Video = () => {
   const { data: video, isLoading } = useFetchVideoById(videoId);
   const username = video?.owner?.username;
   const channelId = video?.owner?._id;
-  const { data: channelProfile } = useFetchChannelProfile(username);
+  
+  const { data: channel } = useFetchChannelProfile(username);
 
-  const isSubscribed = channelProfile?.isSubscribed
-  console.log("isSubscribed", isSubscribed);
+  const isSubscribed = channel?.isSubscribed;
+
 
   const handleSubscribe = () => {
     console.log("click");
@@ -40,7 +42,6 @@ export const Video = () => {
         <div className="flex-1">
           <div className="aspect-video w-full rounded-2xl bg-black overflow-hidden shadow-2xl border border-white/5">
             <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-[#1A103D] to-black">
-              {/* <span className="text-zinc-500 italic"> */}
               <video
                 src={video?.videoFile}
                 poster={video?.thumbnail}
@@ -48,7 +49,6 @@ export const Video = () => {
                 autoPlay
                 className="w-full h-full object-cover"
               />
-              {/* </span> */}
             </div>
           </div>
 
@@ -57,19 +57,28 @@ export const Video = () => {
 
             <div className="flex flex-wrap justify-between items-center mt-4 pb-6 border-b border-white/10 gap-4">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-purple-600"></div>{" "}
+                <span>
+                  <Link to={`/channel/${channel?.username}`}>
+                    <img
+                      src={channel ? channel?.avatar : "user"}
+                      alt="user avatar"
+                      className=" h-9 w-9 rounded-full object-cover ring-1 ring-black/10"
+                    />
+                  </Link>
+                </span>
                 <div>
                   <Link>
                     <h3 className="font-bold">{video?.owner.username}</h3>
                   </Link>
-                  <p className="text-xs text-zinc-400">1.5M subscribers</p>
+                  <p className="text-xs text-zinc-400">
+                    {channel?.subscribersCount} subscribers
+                  </p>
                 </div>
-                <button
+                <SubscribeButton
                   onClick={handleSubscribe}
-                  className="ml-4 px-6 py-2 bg-zinc-50 text-black font-bold rounded-full hover:bg-zinc-200 transition-all"
-                >
-                  {channelProfile?.isSubscribed ? "Subscribed" : "Subscribe"}
-                </button>
+                  isSubscribed={isSubscribed}
+                  isPending={isPending}
+                />
               </div>
 
               <div className="flex gap-2">
