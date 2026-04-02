@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useLogin } from "@/hooks/useAuth";
+import { Link } from "react-router";
 
 
 export function LoginForm({ className, ...props }) {
@@ -119,9 +120,9 @@ export function LoginForm({ className, ...props }) {
                 </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account?{" "}
-                  <a className="text-white" href="#">
+                  <Link className="text-white" to = "/signup">
                     Sign up
-                  </a>
+                  </Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>

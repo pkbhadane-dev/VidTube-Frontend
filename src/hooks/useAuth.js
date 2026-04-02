@@ -20,7 +20,7 @@ export const useRegister = () => {
 
     onSuccess: (data) => {
       console.log("Registration Successful:", data);
-      setAuth(data);
+      setAuth(data.data);
       nevigate("/");
       alert("Account Created!");
     },

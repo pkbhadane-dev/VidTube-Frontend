@@ -16,7 +16,7 @@ export const Channel = () => {
 
   const { data: channelProfile } = useFetchChannelProfile(username);
 
-  const uploadPermission = user?._id === channelProfile?.owner?._id;
+  const uploadPermission = user?._id === channelProfile?._id;
 
   return (
     <div className="bg-[#0B0E14] min-h-screen text-zinc-50 relative">

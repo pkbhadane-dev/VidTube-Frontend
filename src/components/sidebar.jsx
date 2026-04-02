@@ -61,7 +61,7 @@ export const Sidebar = ({ toggle }) => {
                 </div>
               );
             }
-
+            
             return (
               <Link key={item.path} to={item.path}>
                 <div

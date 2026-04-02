@@ -3,13 +3,13 @@ import { SideVideoCard } from "@/components/side-video-card";
 import { Link, useParams } from "react-router";
 import { useState } from "react";
 import { PlaylistModal } from "@/components/playlist-model";
-import { useFetchVideoById } from "@/hooks/useVideo";
+import { useFetchAllVideos, useFetchVideoById } from "@/hooks/useVideo";
 import { useToggleSubscribe } from "@/hooks/useSubscription";
 import { useToggleStore } from "@/store/useToggleStore";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useFetchChannelProfile } from "@/hooks/useChannel";
-import { Button } from "@/components/ui/button";
 import { SubscribeButton } from "@/components/subscribe-btn";
+import { formatDistanceToNow } from "date-fns";
 
 export const Video = () => {
   const [showModel, setShowModel] = useState(false);
@@ -25,11 +25,16 @@ export const Video = () => {
   const { data: video, isLoading } = useFetchVideoById(videoId);
   const username = video?.owner?.username;
   const channelId = video?.owner?._id;
-  
-  const { data: channel } = useFetchChannelProfile(username);
 
+  const { data: channel } = useFetchChannelProfile(username);
+  const { data: allVideos } = useFetchAllVideos();
   const isSubscribed = channel?.isSubscribed;
 
+  const timeAgo = video?.createdAt
+    ? formatDistanceToNow(new Date(video?.createdAt), {
+        addSuffix: true,
+      })
+    : "";
 
   const handleSubscribe = () => {
     console.log("click");
@@ -102,7 +107,7 @@ export const Video = () => {
             )}
 
             <div className="mt-6 p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all cursor-pointer">
-              <p className="text-sm font-bold">1.2M views • 2 days ago</p>
+              <p className="text-sm font-bold">{video?.views} views • {timeAgo} </p>
               <p className="text-sm mt-2 text-zinc-300">
                 {video?.description}
                 <span className="font-bold block mt-2">Show more</span>
@@ -117,10 +122,9 @@ export const Video = () => {
         <div className="lg:w-100 flex flex-col gap-4">
           <h2 className="font-bold text-lg mb-2">Up next</h2>
 
-          <SideVideoCard />
-          <SideVideoCard />
-          <SideVideoCard />
-          <SideVideoCard />
+          {allVideos?.map((video) => (
+            <SideVideoCard key={video._id} video={video} />
+          ))}
         </div>
       </div>
     </div>
