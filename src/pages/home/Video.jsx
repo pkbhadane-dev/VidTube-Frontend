@@ -5,24 +5,21 @@ import { useState } from "react";
 import { PlaylistModal } from "@/components/playlist-model";
 import { useFetchAllVideos, useFetchVideoById } from "@/hooks/useVideo";
 import { useToggleSubscribe } from "@/hooks/useSubscription";
-import { useToggleStore } from "@/store/useToggleStore";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useFetchChannelProfile } from "@/hooks/useChannel";
 import { SubscribeButton } from "@/components/subscribe-btn";
 import { formatDistanceToNow } from "date-fns";
+import { useLikeVideo } from "@/hooks/useLike";
+import { LikeButton } from "@/components/like-btn";
 
 export const Video = () => {
+  const { mutate } = useLikeVideo();
   const [showModel, setShowModel] = useState(false);
   const { mutate: subscribe, isPending } = useToggleSubscribe();
 
-  const dummyPlaylists = [
-    { _id: "1", name: "Watch Later" },
-    { _id: "2", name: "React Projects" },
-    { _id: "3", name: "Liked Videos" },
-  ];
 
   const { videoId } = useParams();
   const { data: video, isLoading } = useFetchVideoById(videoId);
+
   const username = video?.owner?.username;
   const channelId = video?.owner?._id;
 
@@ -37,8 +34,10 @@ export const Video = () => {
     : "";
 
   const handleSubscribe = () => {
-    console.log("click");
     subscribe(channelId);
+  };
+  const handleLike = () => {
+    mutate(video?._id);
   };
 
   return (
@@ -87,9 +86,11 @@ export const Video = () => {
               </div>
 
               <div className="flex gap-2">
-                <button className="bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 flex items-center gap-2">
-                  <span>👍</span> 124K
-                </button>
+                <LikeButton
+                  isLiked={video?.isLiked}
+                  likesCount={video?.likesCount}
+                  onClick={handleLike}
+                />
                 <button
                   className="bg-white/10 px-4 py-2 rounded-full hover:bg-white/20"
                   onClick={() => setShowModel(true)}
@@ -101,13 +102,15 @@ export const Video = () => {
             {showModel && (
               <PlaylistModal
                 closeModel={() => setShowModel(false)}
-                videoId={"@1"}
-                playlist={dummyPlaylists}
+                
+                
               />
             )}
 
             <div className="mt-6 p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all cursor-pointer">
-              <p className="text-sm font-bold">{video?.views} views • {timeAgo} </p>
+              <p className="text-sm font-bold">
+                {video?.views} views • {timeAgo}{" "}
+              </p>
               <p className="text-sm mt-2 text-zinc-300">
                 {video?.description}
                 <span className="font-bold block mt-2">Show more</span>
@@ -115,7 +118,7 @@ export const Video = () => {
             </div>
           </div>
           <div>
-            <CommentSection />
+            <CommentSection videoId={video?._id} />
           </div>
         </div>
 

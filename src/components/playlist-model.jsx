@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 export const PlaylistModal = ({ videoId, closeModel, playlist }) => {
+
   const [newPlaylistName, setNewPlaylistName] = useState();
   const [playlistId, setPlaylistId] = useState();
 
@@ -28,22 +29,22 @@ export const PlaylistModal = ({ videoId, closeModel, playlist }) => {
             <h2 className="text-xl font-bold mb-4">Save to...</h2>
 
             <div className="max-h-60 overflow-y-auto space-y-3 mb-6">
-              {playlist.map((pl) => (
+              {/* {playlist.map((pl) => ( */}
                 <label
-                  key={pl._id}
+                  // key={pl._id}
                   className="flex items-center gap-3 cursor-pointer group"
                 >
                   <input
                     type="checkbox"
-                    onChange={() => setPlaylistId(pl._id)}
+                    // onChange={() => setPlaylistId(pl._id)}
                 
                     className="w-5 h-5 accent-purple-600"
                   />
                   <span className="text-zinc-300 group-hover:text-white transition-colors">
-                    {pl.name}
+                    {/* {pl.name} */}
                   </span>
                 </label>
-              ))}
+              {/* ))} */}
               <button
                 className="w-full bg-purple-600 py-2 rounded-full font-bold hover:bg-purple-500 transition-all"
                 onClick={()=>handleOnClick(playlistId)}

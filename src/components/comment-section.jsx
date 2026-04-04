@@ -1,7 +1,8 @@
+import { useFetchComment } from "@/hooks/useComment";
 import { Comment } from "./ui/comment";
 import { CommentInput } from "./ui/comment-input";
 
-export const CommentSection = () => {
+export const CommentSection = ({ videoId }) => {
   const dummyComments = [
     {
       id: 1,
@@ -26,17 +27,20 @@ export const CommentSection = () => {
     },
   ];
 
+    const { data:comments } = useFetchComment(videoId);
+  // console.log(comments);
+
   return (
     <div className="mt-10">
       <h2 className="text-xl font-bold mb-6">
-        {dummyComments.length} Comments
+        {comments?.length} Comments
       </h2>
 
-      <CommentInput />
+      <CommentInput videoId={videoId} />
 
       <div className="space-y-2">
-        {dummyComments.map((comment) => (
-          <Comment key={comment.id} {...comment} />
+        {comments?.map((comment) => (
+          <Comment key={comment._id} comments={comment} />
         ))}
       </div>
     </div>

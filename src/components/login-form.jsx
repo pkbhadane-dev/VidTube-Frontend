@@ -19,7 +19,6 @@ import { useState } from "react";
 import { useLogin } from "@/hooks/useAuth";
 import { Link } from "react-router";
 
-
 export function LoginForm({ className, ...props }) {
   const [formData, setFormData] = useState({
     email: "",
@@ -120,7 +119,7 @@ export function LoginForm({ className, ...props }) {
                 </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account?{" "}
-                  <Link className="text-white" to = "/signup">
+                  <Link className="text-white" to="/signup">
                     Sign up
                   </Link>
                 </FieldDescription>

@@ -1,9 +1,16 @@
-export const Comment = ({ user, time, text, likes }) => {
+import { useFetchComment } from "@/hooks/useComment";
+
+export const Comment = ({ user, time, likes, comments}) => {
+
+  const {comment, ownerDetails} = comments
+  console.log(comment);
+  
+
   return (
     <div className="flex gap-4 mb-6 group">
       <div className="w-10 h-10 rounded-full bg-zinc-800 shrink-0 overflow-hidden">
-        <img
-          src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user}`}
+        <img className="w-full h-full object-cover"
+          src={ownerDetails.avatar}
           alt="avatar"
         />
       </div>
@@ -14,7 +21,7 @@ export const Comment = ({ user, time, text, likes }) => {
           <span className="text-xs text-zinc-500">{time}</span>
         </div>
 
-        <p className="text-sm text-zinc-300 leading-relaxed">{text}</p>
+        <p className="text-sm text-zinc-300 leading-relaxed">{comment}</p>
 
         <div className="flex items-center gap-4 mt-2">
           <div className="flex items-center gap-1 cursor-pointer hover:bg-white/10 p-1 rounded transition-all">
