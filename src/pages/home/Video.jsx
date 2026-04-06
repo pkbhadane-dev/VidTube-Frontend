@@ -1,6 +1,6 @@
 import { CommentSection } from "@/components/comment-section";
 import { SideVideoCard } from "@/components/side-video-card";
-import { Link, useParams } from "react-router";
+import { Link, useParams, useSearchParams } from "react-router";
 import { useState } from "react";
 import { PlaylistModal } from "@/components/playlist-model";
 import { useFetchAllVideos, useFetchVideoById } from "@/hooks/useVideo";
@@ -10,12 +10,17 @@ import { SubscribeButton } from "@/components/subscribe-btn";
 import { formatDistanceToNow } from "date-fns";
 import { useLikeVideo } from "@/hooks/useLike";
 import { LikeButton } from "@/components/like-btn";
+import { useToggleStore } from "@/store/useToggleStore";
+import { PlaylistSideVideoCard } from "@/components/playlist-side-video-card";
 
 export const Video = () => {
   const { mutate } = useLikeVideo();
-  const [showModel, setShowModel] = useState(false);
-  const { mutate: subscribe, isPending } = useToggleSubscribe();
+  const [searchParams] = useSearchParams();
+  const playlistId = searchParams.get("list");
 
+  // const [showModel, setShowModel] = useState(false);
+  const { showPlaylistModel, setShowPlaylistModel } = useToggleStore();
+  const { mutate: subscribe, isPending } = useToggleSubscribe();
 
   const { videoId } = useParams();
   const { data: video, isLoading } = useFetchVideoById(videoId);
@@ -93,17 +98,16 @@ export const Video = () => {
                 />
                 <button
                   className="bg-white/10 px-4 py-2 rounded-full hover:bg-white/20"
-                  onClick={() => setShowModel(true)}
+                  onClick={() => setShowPlaylistModel(true)}
                 >
                   Add to Playlist
                 </button>
               </div>
             </div>
-            {showModel && (
+            {showPlaylistModel && (
               <PlaylistModal
-                closeModel={() => setShowModel(false)}
-                
-                
+                closeModel={() => setShowPlaylistModel(false)}
+                videoId={video?._id}
               />
             )}
 
@@ -124,10 +128,13 @@ export const Video = () => {
 
         <div className="lg:w-100 flex flex-col gap-4">
           <h2 className="font-bold text-lg mb-2">Up next</h2>
-
-          {allVideos?.map((video) => (
-            <SideVideoCard key={video._id} video={video} />
-          ))}
+          {playlistId ? (
+            <PlaylistSideVideoCard playlistId={playlistId} currentVideoId={videoId}/>
+          ) : (
+            allVideos?.map((video) => (
+              <SideVideoCard key={video._id} video={video} />
+            ))
+          )}
         </div>
       </div>
     </div>

@@ -13,7 +13,8 @@ import { Playlist } from "./pages/home/Playlist";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ProtectedRoute } from "./components/protectedRoute";
-
+import { PlaylistVideos } from "./pages/home/playlistVideos";
+import { SearchPage } from "./pages/home/SearchPage";
 
 const router = createBrowserRouter([
   {
@@ -22,21 +23,15 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <Home /> },
       { path: "/video/:videoId", element: <Video /> },
+      { path: "/playlist/:playlistId", element: <PlaylistVideos /> },
+      { path: "/search", element: <SearchPage /> },
       {
         path: "/channel/:username",
-        element: [
-          <ProtectedRoute>
-            <Channel />
-          </ProtectedRoute>,
-        ],
+        element: [<Channel />],
       },
       {
         path: "/subscription",
-        element: (
-          <ProtectedRoute>
-            <Subscription />
-          </ProtectedRoute>
-        ),
+        element: <Subscription />,
       },
       {
         path: "/history",
@@ -54,7 +49,6 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-     
     ],
   },
   {

@@ -7,6 +7,12 @@ export const useToggleStore = create((set) => ({
   uploadProgress: 0,
   isUploading: false,
   isProcessing: false,
+  showPlaylistModel: false,
+
+  setShowPlaylistModel: (status) =>
+    set({
+      showPlaylistModel: status,
+    }),
 
   setVideoUploadForm: (status) =>
     set({

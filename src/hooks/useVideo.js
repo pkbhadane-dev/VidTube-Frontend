@@ -59,10 +59,10 @@ export const useVideoUpload = () => {
   });
 };
 
-export const useFetchAllVideos = () => {
+export const useFetchAllVideos = (query) => {
   return useQuery({
-    queryKey: ["videos"],
-    queryFn: fetchAllVideoRequest,
+    queryKey: ["videos", query],
+    queryFn:()=> fetchAllVideoRequest(query),
   });
 };
 

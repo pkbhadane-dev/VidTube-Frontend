@@ -8,8 +8,10 @@ export const uploadVideoRequest = async (videoFormData, progress) => {
   return data;
 };
 
-export const fetchAllVideoRequest = async () => {
-  const { data } = await axiosInstance.get("/video");
+export const fetchAllVideoRequest = async (query) => {
+  console.log("query", query);
+  
+  const { data } = await axiosInstance.get("/video", { params: { query } });
   return data.data.docs;
 };
 
@@ -19,7 +21,9 @@ export const fetchVideoByIdRequest = async (videoId) => {
 };
 
 export const fetchUserVideosRequest = async (username) => {
-  const { data } = await axiosInstance.get(`/dashboard/user-videos/${username}`);
+  const { data } = await axiosInstance.get(
+    `/dashboard/user-videos/${username}`,
+  );
   return data.data;
 };
 
@@ -33,5 +37,5 @@ export const updateVideoRequest = async (updateVideoData, videoId) => {
     `/video/${videoId}`,
     updateVideoData,
   );
-  return data
+  return data;
 };

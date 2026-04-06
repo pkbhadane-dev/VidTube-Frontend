@@ -1,8 +1,8 @@
 import { FiMenu } from "react-icons/fi";
-import { IoIosSearch } from "react-icons/io";
-
 import { useAuthStore } from "@/store/useAuthStore";
 import { Link } from "react-router";
+import { SearchBar } from "./search-bar";
+
 export const Navbar = ({ toggle, setToggle }) => {
   const handleOnClick = (e) => {
     e.preventDefault();
@@ -25,10 +25,7 @@ export const Navbar = ({ toggle, setToggle }) => {
         </div>
 
         <div className="flex items-center gap-5 sm:gap-18 ">
-          <div className=" flex items-center rounded-md md:border-2 border-[#ab9be6] ">
-            <input className="w-3xs text-[17px] border-none focus:outline-none focus:ring-0 hidden sm:block" />
-            <IoIosSearch className=" text-[27px] text-[#ab9be6] sm:text-2xl m-2 cursor-pointer " />
-          </div>
+          <SearchBar/>
           <span>
             <Link to={`/channel/${user?.username}`}>
               <img
