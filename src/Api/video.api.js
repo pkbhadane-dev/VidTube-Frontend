@@ -8,10 +8,10 @@ export const uploadVideoRequest = async (videoFormData, progress) => {
   return data;
 };
 
-export const fetchAllVideoRequest = async (query) => {
+export const fetchAllVideoRequest = async (params = {}) => {
+  const query = params?.query
   console.log("query", query);
-  
-  const { data } = await axiosInstance.get("/video", { params: { query } });
+  const { data } = await axiosInstance.get("/video", { params: query ? { query } : {} });
   return data.data.docs;
 };
 

@@ -63,6 +63,7 @@ export const useFetchAllVideos = (query) => {
   return useQuery({
     queryKey: ["videos", query],
     queryFn:()=> fetchAllVideoRequest(query),
+    enabled: true
   });
 };
 

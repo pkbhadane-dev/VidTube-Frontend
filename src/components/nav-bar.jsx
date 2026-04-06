@@ -27,13 +27,13 @@ export const Navbar = ({ toggle, setToggle }) => {
         <div className="flex items-center gap-5 sm:gap-18 ">
           <SearchBar/>
           <span>
-            <Link to={`/channel/${user?.username}`}>
+           {user ? <Link to={`/channel/${user?.username}`}>
               <img
                 src={user ? user?.avatar : "user"}
                 alt="user avatar"
                 className=" h-9 w-9 rounded-full object-cover ring-1 ring-black/10"
               />
-            </Link>
+            </Link> : <Link className="bg-[#9810fa] px-2 py-1 rounded-sm" to="/login">Login</Link>}
           </span>
         </div>
       </div>

@@ -17,9 +17,9 @@ export const LikeButton = ({ isLiked, onClick, likesCount }) => {
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1.2, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
-              className="text-purple-500"
+              className="text-purple-500 cursor-pointer"
             >
-              <AiFillLike size={22} />
+              <AiFillLike className="cursor-pointer" size={22} />
             </motion.div>
           ) : (
             <motion.div
@@ -33,11 +33,10 @@ export const LikeButton = ({ isLiked, onClick, likesCount }) => {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.button>
-
-      {likesCount > 0 && (
+        {likesCount > 0 && (
         <span className="text-sm font-bold tabular-nums">{likesCount}</span>
       )}
+      </motion.button>
     </div>
   );
 };

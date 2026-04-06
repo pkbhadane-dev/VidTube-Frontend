@@ -1,7 +1,6 @@
 import { CommentSection } from "@/components/comment-section";
 import { SideVideoCard } from "@/components/side-video-card";
 import { Link, useParams, useSearchParams } from "react-router";
-import { useState } from "react";
 import { PlaylistModal } from "@/components/playlist-model";
 import { useFetchAllVideos, useFetchVideoById } from "@/hooks/useVideo";
 import { useToggleSubscribe } from "@/hooks/useSubscription";
@@ -12,6 +11,8 @@ import { useLikeVideo } from "@/hooks/useLike";
 import { LikeButton } from "@/components/like-btn";
 import { useToggleStore } from "@/store/useToggleStore";
 import { PlaylistSideVideoCard } from "@/components/playlist-side-video-card";
+import { useAuthStore } from "@/store/useAuthStore";
+import toast from "react-hot-toast";
 
 export const Video = () => {
   const { mutate } = useLikeVideo();
@@ -19,6 +20,7 @@ export const Video = () => {
   const playlistId = searchParams.get("list");
 
   // const [showModel, setShowModel] = useState(false);
+  const { user } = useAuthStore();
   const { showPlaylistModel, setShowPlaylistModel } = useToggleStore();
   const { mutate: subscribe, isPending } = useToggleSubscribe();
 
@@ -30,6 +32,7 @@ export const Video = () => {
 
   const { data: channel } = useFetchChannelProfile(username);
   const { data: allVideos } = useFetchAllVideos();
+
   const isSubscribed = channel?.isSubscribed;
 
   const timeAgo = video?.createdAt
@@ -38,10 +41,20 @@ export const Video = () => {
       })
     : "";
 
+    const loginToast = () => {
+      return toast.error("Login first!")
+    }
+
   const handleSubscribe = () => {
+    if (!user) {
+      return loginToast()
+    }
     subscribe(channelId);
   };
   const handleLike = () => {
+    if (!user) {
+       return loginToast()
+    }
     mutate(video?._id);
   };
 
@@ -98,7 +111,7 @@ export const Video = () => {
                 />
                 <button
                   className="bg-white/10 px-4 py-2 rounded-full hover:bg-white/20"
-                  onClick={() => setShowPlaylistModel(true)}
+                  onClick={() =>{!user ? loginToast() : setShowPlaylistModel(true)}}
                 >
                   Add to Playlist
                 </button>
@@ -129,7 +142,10 @@ export const Video = () => {
         <div className="lg:w-100 flex flex-col gap-4">
           <h2 className="font-bold text-lg mb-2">Up next</h2>
           {playlistId ? (
-            <PlaylistSideVideoCard playlistId={playlistId} currentVideoId={videoId}/>
+            <PlaylistSideVideoCard
+              playlistId={playlistId}
+              currentVideoId={videoId}
+            />
           ) : (
             allVideos?.map((video) => (
               <SideVideoCard key={video._id} video={video} />

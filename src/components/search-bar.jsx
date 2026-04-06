@@ -3,7 +3,7 @@ import { IoIosSearch } from "react-icons/io";
 import { useNavigate } from "react-router";
 
 export const SearchBar = () => {
-  const [searchValue, setSearchValue] = useState();
+  const [searchValue, setSearchValue] = useState(null);
   console.log(searchValue);
   const nevigate = useNavigate();
 

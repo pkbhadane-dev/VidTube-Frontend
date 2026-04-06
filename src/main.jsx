@@ -31,7 +31,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/subscription",
-        element: <Subscription />,
+        element: (
+          <ProtectedRoute>
+            <Subscription />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/history",

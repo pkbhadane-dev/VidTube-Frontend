@@ -2,6 +2,7 @@ import { Navbar } from "@/components/nav-bar";
 import { Sidebar } from "@/components/sidebar";
 import { Outlet } from "react-router";
 import { useState } from "react";
+import { Toaster } from "react-hot-toast";
 
 export const Layout = () => {
   const [toggle, setToggle] = useState(false);
@@ -19,6 +20,7 @@ export const Layout = () => {
         <Sidebar toggle={toggle} />
         <main className="flex-1 overflow-y-auto transition-all duration-300 p-6">
           <Outlet />
+          <Toaster/>
         </main>
       </div>
     </div>

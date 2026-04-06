@@ -1,10 +1,12 @@
 import { usePostComment } from "@/hooks/useComment";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export const CommentInput = ({ videoId }) => {
   const [commentData, setCommentData] = useState({ comment: "" });
   const { mutate, isPending } = usePostComment();
-
+const {user} = useAuthStore()
   const handleOnChange = (e) => {
     setCommentData({
       [e.target.name]: e.target.value,
@@ -13,6 +15,7 @@ export const CommentInput = ({ videoId }) => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    if (!user) return toast.error("Login first!")
     if (!commentData?.comment.trim()) return;
     mutate(
       { commentData: commentData, videoId: videoId },
