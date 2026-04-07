@@ -15,6 +15,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ProtectedRoute } from "./components/protectedRoute";
 import { PlaylistVideos } from "./pages/home/playlistVideos";
 import { SearchPage } from "./pages/home/SearchPage";
+import { ChannelStats } from "./pages/home/ChannelStats";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,14 @@ const router = createBrowserRouter([
       {
         path: "/channel/:username",
         element: [<Channel />],
+      },
+      {
+        path: "/channel-stats",
+        element: (
+          <ProtectedRoute>
+            <ChannelStats />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/subscription",

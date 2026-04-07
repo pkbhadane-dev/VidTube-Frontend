@@ -1,11 +1,12 @@
 import { Card } from "@/components/card";
+import { SubscribeButton } from "@/components/subscribe-btn";
 import { UploadVideoForm } from "@/components/upload-video-form";
 import { useFetchChannelProfile } from "@/hooks/useChannel";
 import { useFetchUserVideos } from "@/hooks/useVideo";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useToggleStore } from "@/store/useToggleStore";
 import { useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 
 export const Channel = () => {
   const { username } = useParams();
@@ -16,7 +17,7 @@ export const Channel = () => {
 
   const { data: channelProfile } = useFetchChannelProfile(username);
 
-  const uploadPermission = user?._id === channelProfile?._id;
+  const owner = user?._id === channelProfile?._id;
 
   return (
     <div className="bg-[#0B0E14] min-h-screen text-zinc-50 relative">
@@ -44,12 +45,18 @@ export const Channel = () => {
               Tailwind CSS. New videos every Tuesday!
             </p>
             <div className="flex gap-3 mt-4">
-              <button className="bg-zinc-50 text-black px-6 py-2 rounded-full font-bold hover:bg-zinc-200 transition-all">
-                Subscribe
-              </button>
-              <button className="bg-white/10 px-6 py-2 rounded-full font-bold hover:bg-white/20 transition-all">
-                Join
-              </button>
+              {owner ? (
+                <>
+                  <button className="bg-zinc-50 text-black px-6 py-2 rounded-md font-bold hover:bg-zinc-300 transition-all">
+                    Update
+                  </button>
+                  <Link to="/channel-stats" className=" bg-purple-600 px-3 py-2 rounded-md mx-8 font-semibold hover:bg-purple-800 transition-all">
+                    Channel Stats
+                  </Link>
+                </>
+              ) : (
+                <SubscribeButton />
+              )}
             </div>
           </div>
         </div>
@@ -76,7 +83,7 @@ export const Channel = () => {
             )}
           </div>
           <div className="flex items-center">
-            {uploadPermission && (
+            {owner && (
               <button
                 onClick={() => setVideoUploadForm(true)}
                 className={` bg-purple-600 px-4 py-2 mb-4 rounded-md text-sm font-bold transition-all relative hover:bg-purple-800`}

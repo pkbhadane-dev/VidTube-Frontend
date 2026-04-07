@@ -13,6 +13,7 @@ import { useToggleStore } from "@/store/useToggleStore";
 import { PlaylistSideVideoCard } from "@/components/playlist-side-video-card";
 import { useAuthStore } from "@/store/useAuthStore";
 import toast from "react-hot-toast";
+import { VideoPlayer } from "@/components/video-player";
 
 export const Video = () => {
   const { mutate } = useLikeVideo();
@@ -64,12 +65,10 @@ export const Video = () => {
         <div className="flex-1">
           <div className="aspect-video w-full rounded-2xl bg-black overflow-hidden shadow-2xl border border-white/5">
             <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-[#1A103D] to-black">
-              <video
-                src={video?.videoFile}
+              <VideoPlayer
+                videofile={video?.videoFile}
                 poster={video?.thumbnail}
-                controls
-                autoPlay
-                className="w-full h-full object-cover"
+                // className=" overflow-hidden"
               />
             </div>
           </div>
