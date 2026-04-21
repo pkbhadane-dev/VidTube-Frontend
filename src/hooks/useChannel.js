@@ -1,4 +1,4 @@
-import { channelProfileRequest } from "@/Api/channel.api";
+import { channelProfileRequest, channelStatsRequest } from "@/Api/channel.api";
 import { useQuery } from "@tanstack/react-query";
 
 export const useFetchChannelProfile = (username) => {
@@ -7,3 +7,10 @@ export const useFetchChannelProfile = (username) => {
     queryFn: () => channelProfileRequest(username),
   });
 };
+
+export const useFetchChannelStats = () => {
+  return useQuery({
+    queryKey:["channelStats"],
+    queryFn: channelStatsRequest
+  })
+}
