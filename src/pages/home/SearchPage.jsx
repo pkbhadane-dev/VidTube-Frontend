@@ -5,10 +5,8 @@ import { useSearchParams } from "react-router";
 export const SearchPage = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q");
-  console.log(query);
 
   const { data: videos } = useFetchAllVideos({ query });
-//   console.log(data);
 
   return (
     <>
@@ -16,7 +14,8 @@ export const SearchPage = () => {
         {videos?.map((video) => (
           <Card key={video._id} video={video} />
         ))}
-      </div>
+      </div>{" "}
+      {videos?.length > 0 || <div className="text-xl text-center font-semibold text-purple-400">Video not found</div>}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+
 import axiosInstance from "./axiosInstance";
 
 export const uploadVideoRequest = async (videoFormData, progress) => {
@@ -10,7 +10,6 @@ export const uploadVideoRequest = async (videoFormData, progress) => {
 
 export const fetchAllVideoRequest = async (params = {}) => {
   const query = params?.query
-  console.log("query", query);
   const { data } = await axiosInstance.get("/video", { params: query ? { query } : {} });
   return data.data.docs;
 };

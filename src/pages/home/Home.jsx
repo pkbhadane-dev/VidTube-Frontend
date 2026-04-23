@@ -4,8 +4,7 @@ import { useFetchAllVideos } from "@/hooks/useVideo";
 
 export const Home = () => {
   const { data: videos, isLoading } = useFetchAllVideos();
-  console.log(videos);
-
+  
   return (
     <>
       {isLoading ? (
