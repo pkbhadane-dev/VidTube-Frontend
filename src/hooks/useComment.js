@@ -1,5 +1,6 @@
 import { fetchCommentRequest, postCommentRequest } from "@/Api/comment.api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 export const usePostComment = () => {
     const queryClient = useQueryClient()
@@ -7,12 +8,11 @@ export const usePostComment = () => {
     mutationFn: async ({ commentData, videoId }) => {
       return postCommentRequest(commentData, videoId);
     },
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
       queryClient.invalidateQueries({queryKey:["comment"]})
     },
     onError: (error) => {
-      console.log(error.response.data.message);
+      toast.error(error?.response.data.message);
     },
   });
 };

@@ -14,6 +14,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 
 export const useVideoUpload = () => {
@@ -49,11 +50,12 @@ export const useVideoUpload = () => {
       queryClient.invalidateQueries({ queryKey: ["userVideos"] });
       setTimeout(() => resetProgress(), 2000);
       setVideoUploadForm(false);
+      toast.success("Video uploaded successfully")
     },
 
     onError: (error) => {
       console.log(error);
-      alert(error.message);
+      toast.error(error?.response.data.message);
       resetProgress();
     },
   });
@@ -93,10 +95,11 @@ export const useDeleteVideoById = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["videos"] });
       queryClient.invalidateQueries({ queryKey: ["userVideos"] });
+      toast.success("Video deleted")
     },
     onError: (error) => {
-      const errMsg = error?.response?.data?.message
-      console.log(errMsg);
+      toast.error(error?.response.data.message || "Something went wrong")
+      
     },
   });
 };
@@ -112,9 +115,10 @@ export const useUpdateVideo = () => {
       queryClient.invalidateQueries({ queryKey: ["videos"] });
       queryClient.invalidateQueries({ queryKey: ["userVideos"] });
       setVideoUpdateForm(false)
+      toast.success("Video updated!")
     },
     onError: (error) => {
-      console.log(error.message || "Error while updating video");
+      toast.error(error?.response.data.message || "Error while updating video");
     },
   });
 };

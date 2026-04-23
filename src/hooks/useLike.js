@@ -1,5 +1,6 @@
 import { likeVideoRequest } from "@/Api/like.api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 export const useLikeVideo = () => {
   const queryClient = useQueryClient();
@@ -11,7 +12,7 @@ export const useLikeVideo = () => {
       queryClient.invalidateQueries({ queryKey: ["video"] });
     },
     onError: (error) => {
-      console.log(error.response.data.message);
+      toast.error(error?.response.data.message);
     },
   });
 };

@@ -20,7 +20,11 @@ export const Layout = () => {
         <Sidebar toggle={toggle} />
         <main className="flex-1 overflow-y-auto transition-all duration-300 p-6">
           <Outlet />
-          <Toaster/>
+          <Toaster toastOptions={{
+            style:{
+              zIndex: 100
+            }
+          }}/>
         </main>
       </div>
     </div>

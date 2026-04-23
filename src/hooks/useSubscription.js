@@ -1,6 +1,7 @@
 import { subscribedChannelsRequest, toggleSubscribeRequest } from "@/Api/subscription.api";
 import { useToggleStore } from "@/store/useToggleStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 export const useToggleSubscribe = () => {
   const queryClient = useQueryClient();
@@ -8,12 +9,11 @@ export const useToggleSubscribe = () => {
     mutationFn: async (channelId) => {
       return await toggleSubscribeRequest(channelId);
     },
-    onSuccess: (subscriptionData) => {
-      console.log(subscriptionData);
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["channelProfile"] });
     },
     onError: (error) => {
-      console.log(error?.response.data.message);
+      toast.error(error?.response.data.message);
     },
   });
 };

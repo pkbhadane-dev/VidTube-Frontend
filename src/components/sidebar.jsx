@@ -35,7 +35,7 @@ export const Sidebar = ({ toggle }) => {
   return (
     <>
       <div
-        className={` ${toggle ? "w-64" : " w-20"} transition-all duration-300 ease-in-out flex flex-col justify-between fixed h-screen md:sticky z-50 ${toggle ? "translate-x-0" : "-translate-x-full md:translate-x-0"} overflow-hidden bg-[#11141B] text-[#FAFAFA]`}
+        className={` ${toggle ? "w-64" : " w-20"} transition-all duration-700 ease-in-out flex flex-col justify-between fixed h-screen md:sticky z-50 ${toggle ? "translate-x-0" : "-translate-x-full md:translate-x-0"} overflow-hidden bg-[#11141B] text-[#FAFAFA]`}
       >
         <div className=" flex justify-center text-[17px] font-semibold gap-11 flex-col h-full p-4">
           {sideBarMenu.map((item) => {
@@ -46,7 +46,7 @@ export const Sidebar = ({ toggle }) => {
                 <div
                   key={item.name}
                   onClick={handleOnClick}
-                  className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group ${toggle ? "px-6 justify-start" : "px-0 justify-center"} ${
+                  className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-700 group ${toggle ? "px-6 justify-start" : "px-0 justify-center"} ${
                     logoutActive
                       ? "bg-purple-600/10 text-purple-500"
                       : "text-zinc-400 hover:bg-white/5 hover:text-white"
@@ -65,7 +65,7 @@ export const Sidebar = ({ toggle }) => {
             return (
               <Link key={item.path} to={item.path}>
                 <div
-                  className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group ${toggle ? "px-6 justify-start" : "px-0 justify-center"} ${
+                  className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-700 group ${toggle ? "px-6 justify-start" : "px-0 justify-center"} ${
                     isActive(item.path)
                       ? "bg-purple-600/10 text-purple-500"
                       : "text-zinc-400 hover:bg-white/5 hover:text-white"

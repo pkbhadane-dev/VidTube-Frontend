@@ -26,7 +26,7 @@ export const Video = () => {
   const { mutate: subscribe, isPending } = useToggleSubscribe();
 
   const { videoId } = useParams();
-  const { data: video, isLoading } = useFetchVideoById(videoId);
+  const { data: video } = useFetchVideoById(videoId);
 
   const username = video?.owner?.username;
   const channelId = video?.owner?._id;

@@ -7,6 +7,7 @@ import {
 } from "@/Api/user.api";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 
 export const useRegister = () => {
@@ -22,12 +23,22 @@ export const useRegister = () => {
       console.log("Registration Successful:", data);
       setAuth(data.data);
       nevigate("/");
-      alert("Account Created!");
+      toast.success("Account Created!");
     },
 
     onError: (error) => {
-      console.log("Registration Error", error);
-      alert(error.message || "Something went wrong");
+      const customErr = error?.response.data.message;
+      const validationErr = error?.response.data.errors;
+
+      if (validationErr) {
+        validationErr?.forEach((err) => {
+          return toast.error(err.msg);
+        });
+      } else if (customErr) {
+        return toast.error(customErr);
+      } else {
+        toast.error("Something went wrong");
+      }
     },
   });
 };
@@ -46,11 +57,11 @@ export const useLogout = () => {
       logoutFromStore();
       queryClient.clear();
       nevigate("/login");
-      alert("Logout successfull");
+      toast.success("Logout successfull");
     },
 
     onError: (error) => {
-      console.log("Logout error", error);
+      toast.error("Logout error", error?.response.data.message);
     },
   });
 };
@@ -67,12 +78,22 @@ export const useLogin = () => {
     onSuccess: (data) => {
       setLogin(data);
       navigate("/");
-      alert("Login Successfull");
+      toast.success("Login Successfull");
     },
 
     onError: (error) => {
-      console.log("Login Error", error);
-      alert(error.message || "something went wrong");
+      const customErr = error?.response.data.message;
+      const validationErr = error?.response.data.errors;
+
+      if (validationErr) {
+        validationErr?.forEach((err) => {
+          return toast.error(err.msg);
+        });
+      } else if (customErr) {
+        return toast.error(customErr);
+      } else {
+        toast.error("Something went wrong");
+      }
     },
   });
 };
@@ -80,6 +101,6 @@ export const useLogin = () => {
 export const useWatchHistory = () => {
   return useQuery({
     queryKey: ["watchHistory"],
-    queryFn: userWatchHistoryRequest
-  })
-}
+    queryFn: userWatchHistoryRequest,
+  });
+};

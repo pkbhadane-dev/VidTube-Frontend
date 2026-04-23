@@ -6,6 +6,7 @@ import {
 } from "@/Api/playlist.api";
 import { useToggleStore } from "@/store/useToggleStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 export const useCreatePlaylist = () => {
   const queryClient = useQueryClient();
@@ -14,13 +15,13 @@ export const useCreatePlaylist = () => {
     mutationFn: ({ videoId, playlistData }) => {
       return createPlaylistRequest({ videoId, playlistData });
     },
-    onSuccess: (data) => {
-      alert("Playlist & Video added");
+    onSuccess: () => {
       queryClient.invalidateQueries(["playlist"]);
       setShowPlaylistModel(false);
+      toast.success("Playlist & Video added");
     },
     onError: (error) => {
-      console.log(error.response.data.message);
+      toast.error(error?.response.data.message);
     },
   });
 };
@@ -40,13 +41,13 @@ export const useAddVideoToPlaylist = () => {
     mutationFn: ({ playlistId, videoId }) => {
       return addVideoToPlaylistRequest({ playlistId, videoId });
     },
-    onSuccess: (data) => {
-      alert("video added ");
+    onSuccess: () => {
       queryClient.invalidateQueries(["playlist"]);
       setShowPlaylistModel(false);
+      toast.success("Video added to playlist");
     },
     onError: (error) => {
-      console.log(error.response.data.message);
+      toast.error(error?.response.data.message);
     },
   });
 };
