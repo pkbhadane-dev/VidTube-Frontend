@@ -20,7 +20,6 @@ export const useRegister = () => {
     },
 
     onSuccess: (data) => {
-      console.log("Registration Successful:", data);
       setAuth(data.data);
       nevigate("/");
       toast.success("Account Created!");

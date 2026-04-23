@@ -8,9 +8,7 @@ export const ChannelStats = () => {
     const {data:stats} = useFetchChannelStats()
     const {user} = useAuthStore()
     const{data:channelVideos} = useFetchUserVideos(user.username)
-    console.log(stats);
-    
-    // const stats = { totalViews: "1.2M", totalSubscribers: "45K", totalVideos: "128", totalLikes: "890K" };
+   
 
   return (
     <div className="p-8 max-w-7xl mx-auto">

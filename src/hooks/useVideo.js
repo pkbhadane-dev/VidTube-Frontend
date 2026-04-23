@@ -54,7 +54,6 @@ export const useVideoUpload = () => {
     },
 
     onError: (error) => {
-      console.log(error);
       toast.error(error?.response.data.message);
       resetProgress();
     },

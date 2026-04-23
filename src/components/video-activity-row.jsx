@@ -2,7 +2,6 @@ import { format } from "date-fns";
 import { FaPen, FaTrashAlt } from "react-icons/fa";
 
 export const VideoActivityRow = ({ video }) => {
-  console.log(video);
 
   const date = new Date(video.createdAt);
   const simpleDate = format(date, "dd mm yyyy, hh:mm a");

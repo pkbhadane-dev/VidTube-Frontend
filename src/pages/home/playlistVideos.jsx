@@ -1,4 +1,6 @@
 import { Card } from "@/components/card";
+import { SideVideoCard } from "@/components/side-video-card";
+import { VideoGridSkeleton } from "@/components/videogrid-skeleton";
 import { useFetchPlaylistById } from "@/hooks/usePlaylist";
 import { Link, useParams } from "react-router";
 
@@ -6,9 +8,7 @@ export const PlaylistVideos = () => {
   const { playlistId } = useParams();
   const { data: playlist, isLoading } = useFetchPlaylistById(playlistId);
 
-  console.log(playlist);
-
-  if (isLoading) return <div className="text-white p-10">Loading...</div>;
+  if (isLoading) return <div className="text-white p-10"> <VideoGridSkeleton/> </div>;
 
   return (
     <div className="flex flex-col lg:flex-row lg:gap-28 gap-8 p-4 md:p-8 max-w-400 mx-auto text-white">
@@ -33,23 +33,20 @@ export const PlaylistVideos = () => {
           <h1 className="text-2xl font-extrabold mt-6 leading-tight">
             {playlist?.title}
           </h1>
-          <p className="text-zinc-400 mt-3 text-sm leading-relaxed">
-            {playlist?.description || "No description provided."}
-          </p>
 
           <div className="mt-6 flex flex-col gap-2 border-t border-zinc-700 pt-4">
             <span className="text-sm font-semibold">
-              {playlist?.videoDetails?.length} Videos
+              {playlist?.playlistVideo?.length} Videos
             </span>
-            <span className="text-xs text-zinc-500">Last updated today</span>
+                  
           </div>
         </div>
       </div>
 
       <div className="flex p-2.5 w-full lg:w-[40%]">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-5">
           {playlist?.playlistVideo?.map((video, index) => (
-            <Card key={video._id} video={video} />
+            <SideVideoCard key={video._id} video={video} />
           ))}
         </div>
       </div>

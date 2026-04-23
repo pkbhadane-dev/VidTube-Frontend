@@ -5,7 +5,6 @@ import { useToggleStore } from "@/store/useToggleStore";
 
 export const ProgressBar = () => {
     const { uploadProgress, isUploading } = useToggleStore();
-    console.log(isUploading);
     
   return (
     <>

@@ -3,7 +3,6 @@ import { useWatchHistory } from "@/hooks/useAuth";
 
 export const History = () => {
   const { data: watchHistory } = useWatchHistory();
-  console.log("history", watchHistory);
 
   return (
     <>

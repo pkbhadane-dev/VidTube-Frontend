@@ -33,7 +33,6 @@ export function UpdateVideoForm({ className, ...props }) {
     data.append("title", title);
     data.append("description", description);
     if (thumbnail) data.append("thumbnail", thumbnail);
-    console.log(selectedVideo._id);
 
     updateVideo({ videoData: data, videoId: selectedVideo._id });
   };

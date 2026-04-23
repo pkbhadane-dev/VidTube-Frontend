@@ -1,8 +1,8 @@
-// import { RiPlaylistVideoLine } from "react-icons/ri"; // प्लेलिस्ट आयकॉन
 
 import { Link } from "react-router";
 
 export const PlaylistCard = ({ playlist }) => {
+  
   return (
     <Link to={`/playlist/${playlist?._id}`}>
       <div className="group cursor-pointer">
@@ -13,9 +13,9 @@ export const PlaylistCard = ({ playlist }) => {
           />
 
           <div className="absolute inset-y-0 right-0 w-1/3 bg-black/60 backdrop-blur-[2px] flex flex-col items-center justify-center text-white">
-            {/* <RiPlaylistVideoLine size={24} /> */}
+            
             <span className="text-sm font-bold mt-1">
-              {playlist?.videoDetails?.length} Videos
+              {playlist?.videos?.length} Videos
             </span>
           </div>
         </div>
