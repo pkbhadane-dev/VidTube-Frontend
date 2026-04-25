@@ -19,3 +19,8 @@ export const userWatchHistoryRequest = async()=>{
   const {data} = await axiosInstance.get("/user/watch-history")
   return data?.data
 }
+
+export const userAvatarChangeRequest = async (avatar) => {
+  const {data} = await axiosInstance.patch("/user/avatar", avatar)
+  return data?.data
+}

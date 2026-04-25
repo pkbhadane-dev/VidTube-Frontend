@@ -4,6 +4,7 @@ import {
   userLoginRequest,
   userLogoutRequest,
   userWatchHistoryRequest,
+  userAvatarChangeRequest,
 } from "@/Api/user.api";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -101,5 +102,24 @@ export const useWatchHistory = () => {
   return useQuery({
     queryKey: ["watchHistory"],
     queryFn: userWatchHistoryRequest,
+  });
+};
+
+export const useAvatarChange = () => {
+  const queryClient = useQueryClient();
+  const setAuth = useAuthStore((state) => state.setAuth);
+  return useMutation({
+    mutationFn: async (avatar) => {
+      return userAvatarChangeRequest(avatar);
+    },
+    onSuccess: (avatar) => {
+      console.log(avatar);
+      setAuth(avatar);
+      queryClient.invalidateQueries({ queryKey: ["channelProfile"] });
+      toast.success("Avatar change successfully");
+    },
+    onError: (error) => {
+      console.error(error?.response.data.message);
+    },
   });
 };

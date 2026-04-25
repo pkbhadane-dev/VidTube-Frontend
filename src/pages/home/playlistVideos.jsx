@@ -1,4 +1,5 @@
 import { Card } from "@/components/card";
+import { PlaylistSideVideoCard } from "@/components/playlist-side-video-card";
 import { SideVideoCard } from "@/components/side-video-card";
 import { VideoGridSkeleton } from "@/components/videogrid-skeleton";
 import { useFetchPlaylistById } from "@/hooks/usePlaylist";
@@ -8,7 +9,13 @@ export const PlaylistVideos = () => {
   const { playlistId } = useParams();
   const { data: playlist, isLoading } = useFetchPlaylistById(playlistId);
 
-  if (isLoading) return <div className="text-white p-10"> <VideoGridSkeleton/> </div>;
+  if (isLoading)
+    return (
+      <div className="text-white p-10">
+        {" "}
+        <VideoGridSkeleton />{" "}
+      </div>
+    );
 
   return (
     <div className="flex flex-col lg:flex-row lg:gap-28 gap-8 p-4 md:p-8 max-w-400 mx-auto text-white">
@@ -21,7 +28,7 @@ export const PlaylistVideos = () => {
             />
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all flex items-center justify-center">
               <Link
-                to={`/video/${playlist?.playlistVideo[0]._id}?list=${playlist._id}`}
+                to={`/video/${playlist?.playlistVideo[0]._id}?list=${playlist?._id}`}
               >
                 <button className="bg-white text-black p-3 rounded-full opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all">
                   Play All
@@ -38,16 +45,13 @@ export const PlaylistVideos = () => {
             <span className="text-sm font-semibold">
               {playlist?.playlistVideo?.length} Videos
             </span>
-                  
           </div>
         </div>
       </div>
 
       <div className="flex p-2.5 w-full lg:w-[40%]">
         <div className="flex flex-col gap-5">
-          {playlist?.playlistVideo?.map((video, index) => (
-            <SideVideoCard key={video._id} video={video} />
-          ))}
+          <PlaylistSideVideoCard playlistId={playlist?._id} />
         </div>
       </div>
     </div>

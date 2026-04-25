@@ -76,7 +76,7 @@ export function UploadVideoForm({ className, ...props}) {
           <form onSubmit={handleOnSubmit}>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="name">Title</FieldLabel>
+                <FieldLabel htmlFor="title">Title</FieldLabel>
                 <Input
                   onChange={handleOnChange}
                   id="title"
@@ -87,7 +87,7 @@ export function UploadVideoForm({ className, ...props}) {
                 />
               </Field>
               <Field>
-                <FieldLabel htmlFor="username">Description</FieldLabel>
+                <FieldLabel htmlFor="description">Description</FieldLabel>
                 <textarea
                 className="h-30 p-2.5 file:text-foreground placeholder:text-muted-foreground border rounded-md focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 outline border-[#30363D] resize-none"
                   onChange={handleOnChange}
@@ -98,7 +98,7 @@ export function UploadVideoForm({ className, ...props}) {
                 />
               </Field>
               <Field>
-                <FieldLabel htmlFor="email">Video File</FieldLabel>
+                <FieldLabel htmlFor="videoFile">Video File</FieldLabel>
                 <Input
                   onChange={(e) => setVideoFile(e.target.files[0])}
                   id="videoFile"
@@ -108,7 +108,7 @@ export function UploadVideoForm({ className, ...props}) {
                 />
               </Field>
               <Field>
-                <FieldLabel htmlFor="avatar">Thumbnail</FieldLabel>
+                <FieldLabel htmlFor="thumbnail">Thumbnail</FieldLabel>
                 <Input
                   id="thumbnail"
                   name="thumbnail"

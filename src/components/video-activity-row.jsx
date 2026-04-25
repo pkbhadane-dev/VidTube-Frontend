@@ -5,6 +5,7 @@ export const VideoActivityRow = ({ video }) => {
 
   const date = new Date(video.createdAt);
   const simpleDate = format(date, "dd mm yyyy, hh:mm a");
+  
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-between p-4 mb-3 bg-zinc-900/40 border border-zinc-800 rounded-2xl hover:bg-zinc-800/60 transition-all group">
@@ -20,7 +21,6 @@ export const VideoActivityRow = ({ video }) => {
           </span> */}
         </div>
 
-        {/* माहिती */}
         <div>
           <h4 className="font-medium text-white line-clamp-1">{video.title}</h4>
           <p className="text-xs text-zinc-500">{simpleDate} • Published</p>
