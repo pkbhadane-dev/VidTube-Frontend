@@ -3,6 +3,7 @@ import {
   createPlaylistRequest,
   fetchPlaylistByIdRequest,
   fetchPlaylistRequest,
+  removeVideoFromPlaylistRequest,
 } from "@/Api/playlist.api";
 import { useToggleStore } from "@/store/useToggleStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -57,5 +58,22 @@ export const useFetchPlaylistById = (playlistId) => {
     queryKey: ["playlistVideos", playlistId],
     queryFn: () => fetchPlaylistByIdRequest(playlistId),
     enabled: !!playlistId,
+  });
+};
+
+export const removeVideoFromPlaylist = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ videoId, playlistId }) => {
+      return removeVideoFromPlaylistRequest({ videoId, playlistId });
+    },
+
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["playlist"] });
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
   });
 };

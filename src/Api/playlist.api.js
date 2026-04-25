@@ -20,7 +20,17 @@ export const addVideoToPlaylistRequest = async ({ playlistId, videoId }) => {
   return data;
 };
 
-export const fetchPlaylistByIdRequest = async(playlistId) => {
-  const {data} = await axiosInstance.get(`/playlist/${playlistId}`)
-  return data.data
-}
+export const fetchPlaylistByIdRequest = async (playlistId) => {
+  const { data } = await axiosInstance.get(`/playlist/${playlistId}`);
+  return data.data;
+};
+
+export const removeVideoFromPlaylistRequest = async ({
+  videoId,
+  playlistId,
+}) => {
+  const { data } = await axiosInstance.patch(
+    `/playlist/remove/${videoId}/${playlistId}`,
+  );
+  return data;
+};

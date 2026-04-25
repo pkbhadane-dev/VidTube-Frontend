@@ -49,8 +49,8 @@ export const PlaylistVideos = () => {
         </div>
       </div>
 
-      <div className="flex p-2.5 w-full lg:w-[40%]">
-        <div className="flex flex-col gap-5">
+      <div className=" flex w-full m-auto ">
+        <div className="flex flex-col w-full gap-5">
           <PlaylistSideVideoCard playlistId={playlist?._id} />
         </div>
       </div>
