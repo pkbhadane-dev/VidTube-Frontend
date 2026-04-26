@@ -13,6 +13,12 @@ export const Card = ({ video }) => {
   });
   const isOwner = user?._id === video?.owner?._id;
 
+  const avatar = video?.owner?.avatar;
+  const avatarName = video?.owner?.username.charAt(0);
+  console.log(avatarName);
+  console.log(avatar);
+  
+
   return (
     <>
       <Link to={`/video/${video?._id}`}>
@@ -28,16 +34,28 @@ export const Card = ({ video }) => {
               <div className="absolute inset-0 bg-purple-900/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
             {isOwner && <UpdateDeleteBtn video={video} />}
-            <div className="p-4">
-              <h3 className="text-zinc-50 font-semibold line-clamp-2 truncate group-hover:text-purple-300 transition-colors">
-                {video?.title}
-              </h3>
-              <p className="text-zinc-400 text-sm mt-2 flex items-center gap-2">
-                {video?.owner.username}
-                <span className="w-3 h-3 bg-purple-500 rounded-full inline-block"></span>
-              </p>
-              <div className="text-zinc-500 text-xs mt-1">
-                {video?.views} views • {timeAgo}
+            <div className="p-4 flex gap-3">
+              <div className="flex justify-center items-center">
+                {avatar ? (
+                  <img
+                    src={avatar}
+                    className=" h-10 w-10 rounded-full object-cover ring-1 ring-black/10"
+                  />
+                ) : (
+                  <span className="h-10 w-10 rounded-full object-cover ring-1 ring-black/10">{avatarName}</span>
+                )}
+              </div>
+              <div>
+                <h3 className="text-zinc-50 font-semibold line-clamp-2 truncate group-hover:text-purple-300 transition-colors">
+                  {video?.title}
+                </h3>
+                <p className="text-zinc-400 text-sm flex items-center gap-2">
+                  {video?.owner.username}
+                  {/* <span className="w-3 h-3 bg-purple-500 rounded-full inline-block"></span> */}
+                </p>
+                <div className="text-zinc-500 text-xs mt-1">
+                  {video?.views} views • {timeAgo}
+                </div>
               </div>
             </div>
           </div>
