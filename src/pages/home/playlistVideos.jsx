@@ -17,6 +17,10 @@ export const PlaylistVideos = () => {
       </div>
     );
 
+    if(playlist?.playlistVideo?.length <= 0){
+      return <div className="text-2xl text-white text-center font-semibold">Empty Playlist</div>
+    }
+
   return (
     <div className="flex flex-col lg:flex-row lg:gap-28 gap-8 p-4 md:p-8 max-w-400 mx-auto text-white">
       <div className="w-full lg:w-2/5 shrink-0">
@@ -28,7 +32,7 @@ export const PlaylistVideos = () => {
             />
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all flex items-center justify-center">
               <Link
-                to={`/video/${playlist?.playlistVideo[0]._id}?list=${playlist?._id}`}
+                to={`/video/${playlist?.playlistVideo[0]?._id}?list=${playlist?._id}`}
               >
                 <button className="bg-white text-black p-3 rounded-full opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all">
                   Play All

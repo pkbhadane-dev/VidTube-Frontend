@@ -1,6 +1,7 @@
 import {
   addVideoToPlaylistRequest,
   createPlaylistRequest,
+  deletePlaylistRequest,
   fetchPlaylistByIdRequest,
   fetchPlaylistRequest,
   removeVideoFromPlaylistRequest,
@@ -61,7 +62,7 @@ export const useFetchPlaylistById = (playlistId) => {
   });
 };
 
-export const removeVideoFromPlaylist = () => {
+export const useRemoveVideoFromPlaylist = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ videoId, playlistId }) => {
@@ -69,11 +70,27 @@ export const removeVideoFromPlaylist = () => {
     },
 
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["playlist"] });
+      queryClient.invalidateQueries({ queryKey: ["playlistVideos"] });
       console.log(data);
     },
     onError: (error) => {
       console.log(error);
+    },
+  });
+};
+
+export const useDeletePlaylist = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (playlistId) => {
+      return deletePlaylistRequest(playlistId);
+    },
+    onSuccess: (response) => {
+      toast.success(response?.data.message);
+      queryClient.invalidateQueries({ queryKey: ["playlist"] });
+    },
+    onError: (error) => {
+      toast.error(error?.response.data.message);
     },
   });
 };

@@ -16,7 +16,7 @@ export const Card = ({ video }) => {
   return (
     <>
       <Link to={`/video/${video?._id}`}>
-        <div className="group relative p-px rounded-xl overflow-hidden transition-all duration-500 hover:bg-linear-to-br hover:from-[#7000FF] hover:to-[#FF0080] hover:shadow-[0_0_20px_rgba(112,0,255,0.2)]">
+        <div className="group relative p-px rounded-xl overflow-hidden transition-all duration-500 hover:bg-linear-to-br from-[#7000FF] to-[#FF0080] hover:shadow-[0_0_20px_rgba(112,0,255,0.2)]">
           <div className="bg-[#11141B] rounded-xl h-full overflow-hidden">
             <div className=" bg-zinc-800/50 flex items-center justify-center relative overflow-hidden">
               <img

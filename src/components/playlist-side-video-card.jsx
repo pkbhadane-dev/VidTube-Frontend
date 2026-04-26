@@ -1,19 +1,25 @@
 import {
-  removeVideoFromPlaylist,
   useFetchPlaylistById,
+  useRemoveVideoFromPlaylist,
 } from "@/hooks/usePlaylist";
 import { Link } from "react-router";
-import { SideVideoCard } from "./side-video-card";
 import { useAuthStore } from "@/store/useAuthStore";
 import { MdDelete } from "react-icons/md";
 
 export const PlaylistSideVideoCard = ({ playlistId, currentVideoId }) => {
   const { data: playlist, isLoading } = useFetchPlaylistById(playlistId);
-
   const { user } = useAuthStore();
-  const isOwner = user._id === playlist?.owner;
+  const { mutate, isPending } = useRemoveVideoFromPlaylist();
 
-  const { mutate } = removeVideoFromPlaylist();
+  if (isPending) {
+    return <h1 className="text-2xl">Pending...</h1>
+  }
+
+  if (isLoading) {
+    return <div className="text-2xl ">Loading Playlist... </div>;
+  }
+
+  const isOwner = user?._id === playlist?.owner;
 
   return (
     <div className="border border-zinc-800 rounded-xl overflow-hidden bg-zinc-900">
@@ -28,9 +34,8 @@ export const PlaylistSideVideoCard = ({ playlistId, currentVideoId }) => {
 
       <div className="max-h-150 py-2 rounded-md overflow-y-auto custom-scrollbar">
         {playlist?.playlistVideo?.map((video, index) => (
-          <div className=" flex items-end">
+          <div key={video._id} className=" flex items-end">
             <Link
-              key={video._id}
               to={`/video/${video._id}?list=${playlistId}`}
               className={` relative flex flex-row items-center gap-3 p-2 pr-5 w-full hover:bg-zinc-800 transition-all ${
                 video._id === currentVideoId ? "bg-zinc-800" : ""
@@ -69,7 +74,7 @@ export const PlaylistSideVideoCard = ({ playlistId, currentVideoId }) => {
               <div className="p-2">
                 {" "}
                 <MdDelete
-                  className="hover:text-slate-500 hover:scale-125 transition-all z-50 duration-300"
+                  className="hover:text-slate-500 hover:scale-125 transition-all z-50 duration-300 cursor-pointer"
                   onClick={() =>
                     mutate({ videoId: video._id, playlistId: playlist._id })
                   }
@@ -79,7 +84,6 @@ export const PlaylistSideVideoCard = ({ playlistId, currentVideoId }) => {
             )}
           </div>
         ))}
-        
       </div>
     </div>
   );

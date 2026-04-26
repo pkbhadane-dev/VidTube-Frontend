@@ -9,7 +9,9 @@ export const useToggleSubscribe = () => {
     mutationFn: async (channelId) => {
       return await toggleSubscribeRequest(channelId);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast.success(data.message);
+      
       queryClient.invalidateQueries({ queryKey: ["channelProfile"] });
     },
     onError: (error) => {

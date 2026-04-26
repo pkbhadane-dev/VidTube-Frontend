@@ -19,7 +19,7 @@ export const Navbar = ({ toggle, setToggle }) => {
             onClick={handleOnClick}
             className="text-2xl text-[#ab9be6] cursor-pointer"
           />
-          <span className="text-2xl sm:text-3xl font-mono font-extrabold tracking-tight bg-linear-to-t from-[#7000FF] via-[#9862ea] to-[#ab9be6] bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+          <span className="text-2xl sm:text-3xl font-mono font-extrabold tracking-tight bg-linear-to-t from-[#7000FF] via-[#9862ea] to-[#ab9be6] bg-clip-text text-transparent drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)]">
             VidTube
           </span>
         </div>

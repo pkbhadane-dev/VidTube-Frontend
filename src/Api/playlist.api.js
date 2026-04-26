@@ -34,3 +34,8 @@ export const removeVideoFromPlaylistRequest = async ({
   );
   return data;
 };
+
+export const deletePlaylistRequest = (playlistId) => {
+  const response = axiosInstance.delete(`/playlist/${playlistId}`);
+  return response;
+};
