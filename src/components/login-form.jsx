@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useLogin } from "@/hooks/useAuth";
 import { Link } from "react-router";
+import { ButtonLoading } from "./buttonLoading";
 
 export function LoginForm({ className, ...props }) {
   const [formData, setFormData] = useState({
@@ -94,7 +95,7 @@ export function LoginForm({ className, ...props }) {
                   className="bg-[#7000FF] shadow-[0px_0px_15px_rgba(255, 0, 0, 0.4)] hover:shadow-xl hover:shadow-[#7000FF] cursor-pointer "
                   type="submit"
                 >
-                  Login
+                  {isPending ? <ButtonLoading /> : <span>Login</span>}
                 </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account?{" "}

@@ -2,9 +2,11 @@ import { Card } from "@/components/card";
 import { PlaylistCard } from "@/components/playlist-card";
 import { SubscribeButton } from "@/components/subscribe-btn";
 import { UploadVideoForm } from "@/components/upload-video-form";
+import { VideoGridSkeleton } from "@/components/videogrid-skeleton";
 import { useAvatarChange } from "@/hooks/useAuth";
 import { useFetchChannelProfile } from "@/hooks/useChannel";
 import { useFetchPlaylist } from "@/hooks/usePlaylist";
+import { useToggleSubscribe } from "@/hooks/useSubscription";
 import { useFetchUserVideos } from "@/hooks/useVideo";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useToggleStore } from "@/store/useToggleStore";
@@ -32,34 +34,45 @@ export const Channel = () => {
   const { user, isAuthenticated } = useAuthStore();
 
   const { setVideoUploadForm, videoUploadForm } = useToggleStore();
-  const { data: channelVideos, isPending } = useFetchUserVideos(username);
-
+  const { data: channelVideos, isPending: videoUploadPending } =
+    useFetchUserVideos(username);
+  const { mutate: subscribe, isPending } = useToggleSubscribe();
   const { data: channelProfile } = useFetchChannelProfile(username);
 
   const owner = user?._id === channelProfile?._id;
-
+  const isSubscribed = channelProfile?.isSubscribed;
   const { data: playlists } = useFetchPlaylist(channelProfile?._id);
+
+  const handleSubscribe = () => {
+    if (!user) {
+      return toast.error("Login first");
+    }
+    subscribe(channelProfile?._id);
+  };
 
   return (
     <div className="bg-[#0B0E14] min-h-screen text-zinc-50 relative">
-      <div className="w-full h-40 sm:h-64 bg-linear-to-r from-[#1A103D] via-[#7000FF] to-[#FF0080] opacity-80"></div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-6 pb-8 border-b border-white/10">
+        <div className="flex flex-col md:flex-row items-start rounded-sm md:items-center gap-6 p-4 border-b border-white/10 bg-linear-to-r from-[#1A103D] via-[#7000FF] to-[#FF0080] opacity-80">
           <div className="relative">
-            <div className=" group absolute inset-1 rounded-full flex items-center justify-center opacity-0 hover:opacity-100 hover:bg-linear-to-b from-gray-500/60 overflow-hidden to-transparent ">
-              <form>
-                <label htmlFor="image">
-                  <PencilIcon size={30} className=" cursor-pointer" />
-                </label>
-                <input
-                  id="image"
-                  hidden
-                  type="file"
-                  onChange={handleAvatarOnChange}
-                />
-              </form>{" "}
-            </div>
+            {owner && (
+              <div className=" group absolute inset-1 rounded-full flex items-center justify-center opacity-0 hover:opacity-100 hover:bg-linear-to-b from-gray-500/60 overflow-hidden to-transparent ">
+                <form>
+                  <label htmlFor="image">
+                    <PencilIcon
+                      size={30}
+                      className="hover:scale-125 duration-300 cursor-pointer"
+                    />
+                  </label>
+                  <input
+                    id="image"
+                    hidden
+                    type="file"
+                    onChange={handleAvatarOnChange}
+                  />
+                </form>{" "}
+              </div>
+            )}
             {avatarPending && (
               <span className="absolute inset-0 rounded-full flex justify-center items-center">
                 {" "}
@@ -67,7 +80,7 @@ export const Channel = () => {
               </span>
             )}
             <img
-              className=" object-cover w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-[#0B0E14]"
+              className=" object-cover w-32 h-32 md:w-40 md:h-40 rounded-full  border-[#0B0E14]"
               src={channelProfile?.avatar}
               alt="Channel Avatar"
             />
@@ -79,7 +92,7 @@ export const Channel = () => {
                 {channelProfile?.username}
               </h1>
               <p>{channelProfile?.fullname}</p>
-              <p className="text-zinc-400 mt-1">
+              <p className="text-slate-100 mt-1">
                 {channelProfile?.subscribersCount} subscribers{" "}
                 {/*• 120 videos*/}
               </p>
@@ -95,7 +108,11 @@ export const Channel = () => {
                 </Link>
               ) : (
                 <div className=" mt-6">
-                  <SubscribeButton />
+                  <SubscribeButton
+                    onClick={handleSubscribe}
+                    isPending={isPending}
+                    isSubscribed={isSubscribed}
+                  />
                 </div>
               )}
             </div>
@@ -123,7 +140,7 @@ export const Channel = () => {
               ),
             )}
           </div>
-          <div className="absolute md:static right-4 top-122 sm:top-146 flex items-center">
+          <div className="absolute md:static z-90 right-4 top-122 sm:top-146 flex items-center">
             {owner && (
               <button
                 onClick={() => setVideoUploadForm(true)}
@@ -135,14 +152,17 @@ export const Channel = () => {
           </div>
         </div>
         {videoUploadForm && <UploadVideoForm />}
-        <div className="py-14 sm:py-7">
-          {activeTab === "Videos" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {channelVideos?.map((video) => (
-                <Card key={video._id} video={video} />
-              ))}
-            </div>
-          )}
+        <div className="py-14 sm:py-12 md:py-2">
+          {activeTab === "Videos" &&
+            (videoUploadPending ? (
+              <VideoGridSkeleton />
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {channelVideos?.map((video) => (
+                  <Card key={video._id} video={video} />
+                ))}
+              </div>
+            ))}
 
           {activeTab === "About" && (
             <div className="max-w-3xl text-zinc-300">

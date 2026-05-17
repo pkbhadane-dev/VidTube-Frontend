@@ -82,14 +82,19 @@ export const useLogin = () => {
     },
 
     onError: (error) => {
+      console.log(error);
+
       const customErr = error?.response.data.message;
       const validationErr = error?.response.data.errors;
+
+      console.log("customErr", customErr);
+      console.log("validationErr", validationErr);
 
       if (validationErr) {
         validationErr?.forEach((err) => {
           return toast.error(err.msg);
         });
-      } else if (customErr) {
+      } if (customErr) {
         return toast.error(customErr);
       } else {
         toast.error("Something went wrong");
