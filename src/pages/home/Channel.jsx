@@ -1,7 +1,8 @@
 import { Card } from "@/components/card";
 import { PlaylistCard } from "@/components/playlist-card";
 import { SubscribeButton } from "@/components/subscribe-btn";
-import { UploadVideoForm } from "@/components/upload-video-form";
+import { UpdatePasswordAndProfile } from "@/components/update-password-and-profile";
+import { UploadVideoForm } from "@/components/video-upload-form";
 import { VideoGridSkeleton } from "@/components/videogrid-skeleton";
 import { useAvatarChange } from "@/hooks/useAuth";
 import { useFetchChannelProfile } from "@/hooks/useChannel";
@@ -53,7 +54,7 @@ export const Channel = () => {
   return (
     <div className="bg-[#0B0E14] min-h-screen text-zinc-50 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="flex flex-col md:flex-row items-start rounded-sm md:items-center gap-6 p-4 border-b border-white/10 bg-linear-to-r from-[#1A103D] via-[#7000FF] to-[#FF0080] opacity-80">
+        <div className=" relative flex flex-col md:flex-row items-start rounded-sm md:items-center gap-6 p-4 border-b border-white/10 bg-linear-to-r from-[#1A103D] via-[#7000FF] to-[#FF0080] opacity-80">
           <div className="relative">
             {owner && (
               <div className=" group absolute inset-1 rounded-full flex items-center justify-center opacity-0 hover:opacity-100 hover:bg-linear-to-b from-gray-500/60 overflow-hidden to-transparent ">
@@ -102,7 +103,7 @@ export const Channel = () => {
               {owner ? (
                 <Link
                   to="/channel-stats"
-                  className=" bg-purple-600 px-3 py-2 rounded-md mx-1 sm:mx-8 font-semibold hover:bg-purple-800 transition-all"
+                  className=" bg-purple-600 px-1 sm:px-3   py-2 rounded-md mx-1 sm:mx-8 font-semibold hover:bg-purple-800 transition-all"
                 >
                   Channel Stats
                 </Link>
@@ -117,10 +118,14 @@ export const Channel = () => {
               )}
             </div>
           </div>
+          
         </div>
+        <div className="absolute top-2.5 right-6 md:top-4 sm:right-11">
+            <UpdatePasswordAndProfile className=""/>
+          </div>
 
         <div className="flex justify-between px-8 mt-4 border-b border-white/5 overflow-x-auto no-scrollbar">
-          <div className=" flex gap-8">
+          <div className=" flex  gap-8">
             {["Home", "Videos", "Playlists", "Community", "About"].map(
               (tab) => (
                 <button
@@ -140,7 +145,7 @@ export const Channel = () => {
               ),
             )}
           </div>
-          <div className="absolute md:static z-90 right-4 top-122 sm:top-146 flex items-center">
+          <div className="absolute  md:static  right-4 top-83 sm:top-82 sm:right-8 flex items-center">
             {owner && (
               <button
                 onClick={() => setVideoUploadForm(true)}

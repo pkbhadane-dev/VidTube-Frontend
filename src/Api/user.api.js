@@ -15,12 +15,17 @@ export const userLogoutRequest = async () => {
   return response;
 };
 
-export const userWatchHistoryRequest = async()=>{
-  const {data} = await axiosInstance.get("/user/watch-history")
-  return data?.data
-}
+export const userWatchHistoryRequest = async () => {
+  const { data } = await axiosInstance.get("/user/watch-history");
+  return data?.data;
+};
 
 export const userAvatarChangeRequest = async (avatar) => {
-  const {data} = await axiosInstance.patch("/user/avatar", avatar)
-  return data?.data
-}
+  const { data } = await axiosInstance.patch("/user/avatar", avatar);
+  return data?.data;
+};
+
+export const userPasswordChangeRequest = async (userFormData) => {
+  const {data} = await axiosInstance.post("/user/change-password", userFormData);
+  return data;
+};

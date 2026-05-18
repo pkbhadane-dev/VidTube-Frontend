@@ -1,10 +1,10 @@
-import axiosInstance from "@/Api/axiosInstance";
 import {
   userRegisterRequest,
   userLoginRequest,
   userLogoutRequest,
   userWatchHistoryRequest,
   userAvatarChangeRequest,
+  userPasswordChangeRequest,
 } from "@/Api/user.api";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -61,7 +61,7 @@ export const useLogout = () => {
     },
 
     onError: (error) => {
-      toast.error("Logout error", error?.response.data.message);
+      toast.error(error?.response.data.message);
     },
   });
 };
@@ -82,19 +82,15 @@ export const useLogin = () => {
     },
 
     onError: (error) => {
-      console.log(error);
-
       const customErr = error?.response.data.message;
       const validationErr = error?.response.data.errors;
-
-      console.log("customErr", customErr);
-      console.log("validationErr", validationErr);
 
       if (validationErr) {
         validationErr?.forEach((err) => {
           return toast.error(err.msg);
         });
-      } if (customErr) {
+      }
+      if (customErr) {
         return toast.error(customErr);
       } else {
         toast.error("Something went wrong");
@@ -118,13 +114,26 @@ export const useAvatarChange = () => {
       return userAvatarChangeRequest(avatar);
     },
     onSuccess: (avatar) => {
-      console.log(avatar);
       setAuth(avatar);
       queryClient.invalidateQueries({ queryKey: ["channelProfile"] });
       toast.success("Avatar change successfully");
     },
     onError: (error) => {
-      console.error(error?.response.data.message);
+      toast.error(error?.response.data.message);
+    },
+  });
+};
+
+export const usePasswordChange = () => {
+  return useMutation({
+    mutationFn:async (formData) => {
+      return userPasswordChangeRequest(formData);
+    },
+    onSuccess: (data) => {
+      toast.success(data.message)
+    },
+    onError: (error) => {
+      toast.error(error.response.data.message);
     },
   });
 };

@@ -6,7 +6,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { FaPen } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import { IoMdClose } from "react-icons/io";
-import { UpdateVideoForm } from "./update-video-form";
+import {UpdateVideoForm} from "./video-update-form"
 
 export const UpdateDeleteBtn = ({ video }) => {
 const{videoUpdateForm, setVideoUpdateForm} = useToggleStore()

@@ -15,9 +15,6 @@ export const Card = ({ video }) => {
 
   const avatar = video?.owner?.avatar;
   const avatarName = video?.owner?.username.charAt(0);
-  console.log(avatarName);
-  console.log(avatar);
-  
 
   return (
     <>
